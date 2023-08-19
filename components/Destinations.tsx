@@ -39,6 +39,7 @@ const Destinations = () => {
                   " ",
                   "-"
                 )}`}
+                key={location.id}
                 className={cn(
                   "block",
                   `col-span-${location.imageSizeBusiness}`

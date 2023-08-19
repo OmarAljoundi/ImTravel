@@ -4,8 +4,8 @@ import { Skeleton } from "./ui/skeleton";
 const DestinationHomeLoading = () => {
   return (
     <div className="grid grid-cols-12 gap-4 lg:gap-6 px-3 xl:px-0">
-      {Array.from(new Array(9)).map((location) => (
-        <Skeleton className={"col-span-4"}>
+      {Array.from(new Array(9)).map((i) => (
+        <Skeleton className={"col-span-4"} key={i}>
           <div className="relative rounded-2xl group">
             <div className="listing-card__img aspect-[4/3]">
               <Skeleton className=" w-full rounded-2xl" />
