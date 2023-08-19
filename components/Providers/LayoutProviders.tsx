@@ -4,7 +4,6 @@ import HeaderTop from "@/components/HeaderTop";
 import MobileMenu from "@/components/MobileMenu";
 import { useDomainStore } from "@/hooks/useDomain";
 import { IOffice } from "@/interface/Office";
-import { useEffect } from "react";
 
 export function LayoutProviders({
   children,
@@ -14,15 +13,7 @@ export function LayoutProviders({
   office: IOffice;
 }) {
   const setOffce = useDomainStore((state) => state.setOffice);
-  const discardOffice = useDomainStore((state) => state.discardOffice);
-
-  useEffect(() => {
-    setOffce(office);
-
-    return () => {
-      discardOffice();
-    };
-  }, []);
+  setOffce(office);
 
   return (
     <div>

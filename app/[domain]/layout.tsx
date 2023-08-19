@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getSiteData, getSitesData } from "@/lib/fetchers";
 import { LayoutProviders } from "@/components/Providers/LayoutProviders";
 import DomainLayout from "@/components/Providers/DomainProvider";
+export const revalidate = 0;
 
 export async function generateStaticParams() {
   const sites = await getSitesData();
