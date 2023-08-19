@@ -11,18 +11,11 @@ export async function getSiteData(domain: string) {
     : null;
 
   console.log("TRYING FETCH DOMAIN", subdomain);
-  return await unstable_cache(
-    async () => {
-      return (await http<IOfficeResponse>("/Office/Search").get()).offices.find(
-        (x) => x.slug == subdomain
-      );
-    },
-    [`${domain}-metadata`],
-    {
-      revalidate: 1,
-      tags: [`${domain}-metadata`],
-    }
-  )();
+  var response = await http<IOfficeResponse>("/Office/Search").get();
+
+  console.log("response", response);
+
+  return response.offices.find((x) => x.slug == subdomain);
 }
 
 export async function getSitesData() {
