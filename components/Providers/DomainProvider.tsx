@@ -1,5 +1,6 @@
 "use client";
 import { useDomainStore } from "@/hooks/useDomain";
+import { hexToHSLString } from "@/lib/helpers";
 import { ReactNode } from "react";
 
 type DomainLayout = {
@@ -15,19 +16,13 @@ export default function DomainLayout({ children }: DomainLayout) {
         {`
           @layer base {
             :root {
-              --primary: ${office?.primaryColor};
-              --secondary: #5c5552;
-              --tertiary: #8f857d;
-              --bg-1: #f7f0f5;
-              --bg-2: #f7f0f5;
-
-              --btn-bg: #efeffd;
-              --border: #c2c7d0;
-              --neutral-700: #243757;
-              --primary-light: #ececfd;
-              --secondary-light: #eafbf1;
-              --secondary-500: #22804a;
-              --dark: #091e42;
+              --primary: ${hexToHSLString(office!.primaryColor)};
+              --secondary: ${hexToHSLString(office!.secondaryColor)};
+              --tertiary: ${hexToHSLString(office!.thirdColor)};
+              --bg-1: ${hexToHSLString(office!.bgPrimaryColor)};
+              --bg-2: ${hexToHSLString(office!.bgSecondaryColor)};
+              --primary-light: ${hexToHSLString(office!.primaryColor, 0.3)};
+              --secondary-light: ${hexToHSLString(office!.secondaryColor, 0.3)};
             }
           }
         `}

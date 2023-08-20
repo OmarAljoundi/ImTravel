@@ -8,9 +8,9 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import SubHeadingBtn from "./SubHeadingBtn";
 const images = [
-  "http://localhost:3000/img/memory-slider-img-3.png",
-  "http://localhost:3000/img/memory-slider-img-2.png",
-  "http://localhost:3000/img/memory-slider-img.jpg",
+  `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/memory-slider-img-3.png`,
+  `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/memory-slider-img-2.png`,
+  `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/memory-slider-img.jpg`,
 ];
 
 const TravelMemory = () => {

@@ -5,12 +5,14 @@ export interface IOffice {
   contactNumber: string;
   address: string;
   logo: string;
+  thirdColor: string;
   secondaryColor: string;
   primaryColor: string;
+  bgSecondaryColor: string;
+  bgPrimaryColor: string;
   primaryFont: string;
   status: boolean;
   createdDate: Date | null;
   modifiedDate: Date | null;
   slug: string | null;
-  file?: File;
 }

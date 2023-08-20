@@ -8,17 +8,17 @@ import SubHeadingBtn from "./SubHeadingBtn";
 
 const choseUsData = [
   {
-    image: "http://localhost:3000/img/duotone-home.png",
+    image: `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/duotone-home.png`,
     header: "المرشد المثالي",
     sub: "نضمن دائماً لجميع عملاءً افضل المرشدين المهارين لجميع الرحلات",
   },
   {
-    image: "http://localhost:3000/img/duotone-discount.png",
+    image: `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/duotone-discount.png`,
     header: "عروض على مدار السنة",
     sub: "ابقى على تواصل معنا لتصلك كل العروض الجديدة والحصرية لعملائينا",
   },
   {
-    image: "http://localhost:3000/img/duotone-support.png",
+    image: `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/duotone-support.png`,
     header: "خدمة عملاء 7/24",
     sub: "أين ماكنت على بقعة الأرض ستتمكن من الوصول الينا",
   },
