@@ -12,7 +12,9 @@ const Hero = () => {
       <Image
         priority
         className="absolute hidden xl:block w-[100%] top-0 right-0"
-        src={`${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/vintage-background.jpg`}
+        src={
+          "https://mundo-tours.s3.eu-central-1.amazonaws.com/office/deem/vintage-background.jpg"
+        }
         width={6000}
         quality={100}
         fetchPriority="high"
@@ -23,10 +25,10 @@ const Hero = () => {
       <div
         className="absolute top-0 left-0 flex flex-col justify-between h-full w-full
        before:w-full before:absolute before:h-full before:bottom-0 
-       before:left-0 before:bg-gradient-to-t before:rounded-b-2xl
+       before:left-0 before:bg-gradient-to-t 
         before:from-slate-800 before:to-transparent group:after:w-full group:after:absolute 
         group:after:h-full group:after:bottom-0 group:after:left-0 
-        group:after:bg-gradient-to-t group:after:rounded-b-2xl 
+        group:after:bg-gradient-to-t 
         group:after:from-[var(--primary)] group:after:to-transparent
          group:after:opacity-60"
       ></div>

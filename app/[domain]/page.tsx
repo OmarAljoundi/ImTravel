@@ -11,7 +11,7 @@ export default async function SiteHomePage() {
       <Destinations />
       <Property />
       <WhyChoose />
-      <TravelMemory />
+      {/* <TravelMemory /> */}
     </>
   );
 }
