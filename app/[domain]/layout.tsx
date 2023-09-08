@@ -28,7 +28,6 @@ export default async function SiteLayout({
 }) {
   const { domain } = params;
   const data = await getSiteData(domain);
-
   if (!data) {
     notFound();
   }

@@ -16,7 +16,7 @@ import { CheckIcon, PlusCircleIcon } from "@heroicons/react/20/solid";
 import { QueryString, cn, daysFilter, europeanCountries } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 import qs from "query-string";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const HeroDropdown2: FC<{
   setSearch?: (search: any) => void;
@@ -25,24 +25,21 @@ const HeroDropdown2: FC<{
 }> = ({ onChange, search, setSearch }) => {
   const pathname = usePathname();
   const [selected, setSelected] = useState<{ value: string; label: string }[]>(
-    () => {
-      if (typeof window !== "undefined") {
-        const query = qs.parseUrl(window.location.href, {
-          arrayFormat: "comma",
-          decode: true,
-        }).query;
-
-        if (query.days && query.days.length > 0) {
-          const labelSet = new Set(query.days);
-          const filteredObjects = daysFilter.filter((obj) =>
-            labelSet.has(obj.value)
-          );
-          return filteredObjects;
-        }
-      }
-      return [];
-    }
+    []
   );
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const days = searchParams.get("days");
+    if (days) {
+      const labelSet = new Set(days.split(","));
+      const filteredObjects = daysFilter.filter((obj) =>
+        labelSet.has(obj.value)
+      );
+      setSelected(filteredObjects);
+    }
+  }, []);
 
   const router = useRouter();
 
@@ -99,7 +96,7 @@ const HeroDropdown2: FC<{
                 {selected.length}
               </Badge>
               <div className="hidden space-x-1 lg:flex">
-                {selected.length > 2 ? (
+                {selected.length > 1 ? (
                   <Badge
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"

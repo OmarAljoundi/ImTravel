@@ -48,7 +48,11 @@ const HeaderTop = () => {
             <i className="las la-phone-volume bg-primary text-white text-2xl p-2 rounded-full"></i>
             <div className="flex-col hidden lg:flex">
               <span className="text-xs ">رقم التواصل</span>
-              <Link href={`tel:${office!.contactNumber}`} className="text-base">
+              <Link
+                href={`tel:${office!.contactNumber}`}
+                className="text-base"
+                dir="ltr"
+              >
                 {office!.contactNumber}
               </Link>
             </div>

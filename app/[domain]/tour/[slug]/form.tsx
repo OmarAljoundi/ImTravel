@@ -18,7 +18,7 @@ const Form: FC<{ tour: ITour }> = ({ tour }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>تواصل معنا</Button>
+        <Button className="w-fit">طريقة الحجز</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

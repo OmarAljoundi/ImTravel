@@ -10,12 +10,12 @@ export async function getSiteData(domain: string) {
     ? domain.replace(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`, "")
     : null;
 
-  console.log("TRYING FETCH DOMAIN", subdomain);
-  var response = await http<IOfficeResponse>("/Office/Search").get();
+  if (subdomain == null || subdomain.includes("www")) return undefined;
+  var response = await http<IOfficeResponse>(
+    `/Office/Search?slug=${subdomain}`
+  ).get();
 
-  console.log("response", response);
-
-  return response.offices.find((x) => x.slug == subdomain);
+  return response.office.status == true ? response.office : undefined;
 }
 
 export async function getSitesData() {
@@ -37,19 +37,32 @@ export async function getBestTours() {
 }
 
 export async function getTours(
+  tourIds: string,
   country?: string | null,
-  destination?: string | null,
   days?: "t1" | "t2" | "t3" | string | null,
+  maxPrice?: number,
   pageSize?: number
 ) {
+  console.log("maxPrice", maxPrice);
   var _SQ: SearchQuery = {
     FilterByOptions: [],
     OrderByOptions: [],
     PageIndex: 0,
     PageSize: pageSize ?? 0,
   };
-  console.log("country", country);
 
+  _SQ.FilterByOptions.push({
+    FilterFor: tourIds,
+    MemberName: "idsList",
+    FilterOperator: eFilterOperator.EqualsToList,
+  });
+  if (maxPrice) {
+    _SQ.FilterByOptions.push({
+      FilterFor: maxPrice,
+      FilterOperator: eFilterOperator.EqualsTo,
+      MemberName: "maxprice",
+    });
+  }
   if (country) {
     _SQ.FilterByOptions.push({
       FilterFor: country,
@@ -57,13 +70,7 @@ export async function getTours(
       MemberName: "country",
     });
   }
-  if (destination) {
-    _SQ.FilterByOptions.push({
-      FilterFor: destination,
-      FilterOperator: eFilterOperator.EqualsTo,
-      MemberName: "destination",
-    });
-  }
+
   if (days) {
     const period = daysFilter.find((x) => x.value == days);
     if (period) {

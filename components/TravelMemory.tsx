@@ -59,9 +59,8 @@ const TravelMemory = () => {
             <SubHeadingBtn text={Text1} classes="bg-[var(--primary-light)]" />
             <h2 className="h2 mt-4 mb-6 leading-tight">{Text2}</h2>
             <p className="mb-14">
-              We also believe in providing our travelers with unique and
-              authentic experiences that you won&apos;t find in guidebooks or on
-              standard tours.
+              نحن نؤمن أيضًا بتقديم تجارب فريدة وأصيلة لمسافرينا لن تجدها في
+              دلائل السفر أو الجولات القياسية.
             </p>
             <ul className="list">
               <li>
@@ -69,11 +68,11 @@ const TravelMemory = () => {
                   01
                 </div>
                 <h4 className="text-2xl font-semibold mb-3">
-                  Find Trips That Fit Your Flexible Lifestyle
+                  ابحث عن رحلات تتناسب مع نمط حياتك المرن
                 </h4>
                 <p className="mb-0">
-                  That&apos;s why we offer a range of tours that are designed to
-                  fit your flexible lifestyle.
+                  لهذا السبب نقدم مجموعة من الجولات التي تم تصميمها لتتناسب مع
+                  نمط حياتك المرن.
                 </p>
               </li>
               <li>
@@ -84,11 +83,11 @@ const TravelMemory = () => {
                   02
                 </div>
                 <h4 className="text-2xl font-semibold mb-3">
-                  Expert-Guided Travel with Placewise
+                  سفر موجه من خلال خبراء في المكان
                 </h4>
                 <p className="mb-0">
-                  we believe that travel should be a source of joy and
-                  inspiration, not stress & worry
+                  نحن نؤمن بأن السفر يجب أن يكون مصدرًا للفرح والإلهام، وليس
+                  مصدرًا للإجهاد والقلق.
                 </p>
               </li>
               <li>
@@ -99,11 +98,10 @@ const TravelMemory = () => {
                   03
                 </div>
                 <h4 className="text-2xl font-semibold mb-3">
-                  Discover the True Cost of Your Trip
+                  اكتشف التكلفة الحقيقية لرحلتك
                 </h4>
                 <p className="mb-0">
-                  We believe that transparency is key to building trust with our
-                  travelers.
+                  نؤمن بأن الشفافية هي المفتاح لبناء الثقة مع مسافرينا.
                 </p>
               </li>
             </ul>

@@ -26,12 +26,12 @@ export const europeanCountries = [
   { label: "استونيا", countryCode: "EE" },
   { label: "فنلندا", countryCode: "FI" },
   { label: "فرنسا", countryCode: "FR" },
-  { label: "ألمانيا", countryCode: "DE" },
+  { label: "المانيا", countryCode: "DE" },
   { label: "اليونان", countryCode: "GR" },
   { label: "هنغاريا", countryCode: "HU" },
-  { label: "آيسلندا", countryCode: "IS" },
-  { label: "إيرلندا", countryCode: "IE" },
-  { label: "إيطاليا", countryCode: "IT" },
+  { label: "ايسلندا", countryCode: "IS" },
+  { label: "ايرلندا", countryCode: "IE" },
+  { label: "ايطاليا", countryCode: "IT" },
   { label: "لاتفيا", countryCode: "LV" },
   { label: "ليتوانيا", countryCode: "LT" },
   { label: "لوكسمبورج", countryCode: "LU" },
@@ -43,7 +43,7 @@ export const europeanCountries = [
   { label: "رومانيا", countryCode: "RO" },
   { label: "سلوفاكيا", countryCode: "SK" },
   { label: "سلوفينيا", countryCode: "SI" },
-  { label: "إسبانيا", countryCode: "ES" },
+  { label: "اسبانيا", countryCode: "ES" },
   { label: "السويد", countryCode: "SE" },
   { label: "سويسرا", countryCode: "CH" },
   { label: "المملكة المتحدة", countryCode: "GB" },
@@ -62,8 +62,8 @@ export const queryString:QueryString = {
 
 }
 export const daysFilter = [
-  { label: "من 5 إلى 7 أيام", value: "t1",period_min:5,period_max:7 },
-   { label: "من 8 إلى 10 أيام", value: "t2",period_min:8,period_max:10  },
-    { label: "من 11 إلى 20 يوم", value: "t3",period_min:11,period_max:20  },
+  { label: "من 5 الى 7 ايام", value: "t1",period_min:5,period_max:7 },
+   { label: "من 8 الى 10 ايام", value: "t2",period_min:8,period_max:10  },
+    { label: "من 11 الى 20 يوم", value: "t3",period_min:11,period_max:20  },
  
 ]

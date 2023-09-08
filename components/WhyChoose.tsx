@@ -5,20 +5,21 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import SubHeadingBtn from "./SubHeadingBtn";
+import { BadgePercent, Headphones, SearchCheck } from "lucide-react";
 
 const choseUsData = [
   {
-    image: `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/duotone-home.png`,
+    image: <SearchCheck className="text-primary mx-auto mb-4" size={35} />,
     header: "المرشد المثالي",
     sub: "نضمن دائماً لجميع عملاءً افضل المرشدين المهارين لجميع الرحلات",
   },
   {
-    image: `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/duotone-discount.png`,
+    image: <BadgePercent className="text-primary mx-auto mb-4" size={35} />,
     header: "عروض على مدار السنة",
     sub: "ابقى على تواصل معنا لتصلك كل العروض الجديدة والحصرية لعملائينا",
   },
   {
-    image: `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}/img/duotone-support.png`,
+    image: <Headphones className="text-primary mx-auto mb-4" size={35} />,
     header: "خدمة عملاء 7/24",
     sub: "أين ماكنت على بقعة الأرض ستتمكن من الوصول الينا",
   },
@@ -62,13 +63,7 @@ const WhyChoose = () => {
               {choseUsData.map((i, index) => (
                 <SwiperSlide className="px-3 my-5" key={index}>
                   <div className="border rounded-2xl hover:shadow-[rgba(149,157,165,0.2)_0px_8px_24px] hover:border-none p-6 xl:p-8 text-center duration-300">
-                    <Image
-                      width={60}
-                      height={60}
-                      src={i.image}
-                      alt="image"
-                      className=" mx-auto mb-6"
-                    />
+                    {i.image}
                     <h4 className="mb-4 text-2xl font-semibold">{i.header}</h4>
                     <p className="mb-0">{i.sub}</p>
                   </div>

@@ -1,8 +1,9 @@
-import { PaperPlane } from "@/public/data/icons";
-import logolight from "@/public/img/logo-light.png";
+"use client";
+import { useDomainStore } from "@/hooks/useDomain";
 import Image from "next/image";
 import Link from "next/link";
 const Footer = () => {
+  const office = useDomainStore((x) => x.office);
   return (
     <footer className="bg-[#091E43]">
       <div className="py-[60px] lg:py-[120px]">
@@ -10,7 +11,13 @@ const Footer = () => {
           <div className="grid grid-cols-12 gap-6 text-white px-3 xl:px-0">
             <div className="col-span-12 md:col-span-6 xl:col-span-3">
               <Link href="/" className="inline-block mb-6">
-                <Image src={logolight} alt="image" className="" />
+                <Image
+                  src={office?.logo || ""}
+                  width={250}
+                  height={250}
+                  alt="image"
+                  className=""
+                />
               </Link>
               <p className="clr-neutral-30 mb-6">
                 Real estate can be bought, sold, leased, or rented, and can be a
@@ -21,35 +28,40 @@ const Footer = () => {
                 <li>
                   <Link
                     href="#"
-                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full">
+                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full"
+                  >
                     <i className="lab la-facebook-f text-xl"></i>
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="#"
-                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full">
+                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full"
+                  >
                     <i className="lab la-twitter text-xl"></i>
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="#"
-                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full">
+                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full"
+                  >
                     <i className="lab la-linkedin-in text-xl"></i>
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="#"
-                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full">
+                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full"
+                  >
                     <i className="lab la-instagram text-xl"></i>
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="#"
-                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full">
+                    className="border border-[#3538ED] duration-300 hover:bg-[#3538ED] grid place-content-center p-[10px] rounded-full"
+                  >
                     <i className="lab la-dribbble text-xl"></i>
                   </Link>
                 </li>
@@ -61,35 +73,40 @@ const Footer = () => {
                 <li>
                   <Link
                     href="/help-center"
-                    className="hover:text-[var(--secondary)] duration-300">
+                    className="hover:text-[var(--secondary)] duration-300"
+                  >
                     Help Center
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/offers"
-                    className="hover:text-[var(--secondary)] duration-300">
+                    className="hover:text-[var(--secondary)] duration-300"
+                  >
                     Offers
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/privacy"
-                    className="hover:text-[var(--secondary)] duration-300">
+                    className="hover:text-[var(--secondary)] duration-300"
+                  >
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/terms"
-                    className="hover:text-[var(--secondary)] duration-300">
+                    className="hover:text-[var(--secondary)] duration-300"
+                  >
                     Terms & Conditions
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="blog-grid"
-                    className="hover:text-[var(--secondary)] duration-300">
+                    className="hover:text-[var(--secondary)] duration-300"
+                  >
                     Blog
                   </Link>
                 </li>
@@ -111,7 +128,8 @@ const Footer = () => {
                     <i className="las la-envelope-open bg-[var(--secondary)] text-[var(--neutral-700)] text-xl p-2 rounded-full"></i>
                     <Link
                       href="mailto:example@mail.com"
-                      className="mb-0 clr-neutral-30">
+                      className="mb-0 clr-neutral-30"
+                    >
                       example@mail.com
                     </Link>
                   </div>
@@ -140,9 +158,8 @@ const Footer = () => {
                   />
                   <button
                     type="button"
-                    className="grid place-content-center px-6 py-3 rounded-full bg-[var(--tertiary)]  border-0">
-                    <PaperPlane />
-                  </button>
+                    className="grid place-content-center px-6 py-3 rounded-full bg-[var(--tertiary)]  border-0"
+                  ></button>
                 </form>
               </div>
             </div>
@@ -170,21 +187,24 @@ const Footer = () => {
                     <li>
                       <Link
                         href="/sign-in"
-                        className="hover:text-[var(--secondary)] duration-300">
+                        className="hover:text-[var(--secondary)] duration-300"
+                      >
                         Sign in
                       </Link>
                     </li>
                     <li>
                       <Link
                         href="/signup"
-                        className="hover:text-[var(--secondary)] duration-300">
+                        className="hover:text-[var(--secondary)] duration-300"
+                      >
                         Sign Up
                       </Link>
                     </li>
                     <li>
                       <Link
                         href="/faq"
-                        className="hover:text-[var(--secondary)] duration-300">
+                        className="hover:text-[var(--secondary)] duration-300"
+                      >
                         FAQ
                       </Link>
                     </li>

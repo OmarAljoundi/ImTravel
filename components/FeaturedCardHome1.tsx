@@ -72,24 +72,6 @@ const FeaturedCardHome1 = ({
           >
             {name}
           </Link>
-          <ul className="flex flex-wrap divide-x divide-dashed justify-between mt-5">
-            <li className="flex flex-col px-1 sm:px-4 gap-2">
-              <i className="las la-city text-xl"></i>
-              <span className="block"> rooms </span>
-            </li>
-            <li className="flex flex-col px-1 sm:px-4 gap-2">
-              <i className="las la-bed text-xl"></i>
-              <span className="block"> bed Bed </span>
-            </li>
-            <li className="flex flex-col px-1 sm:px-4 gap-2">
-              <i className="las la-bath text-xl"></i>
-              <span className="block"> bath Bath </span>
-            </li>
-            <li className="flex flex-col px-1 sm:px-4 gap-2">
-              <i className="las la-arrows-alt text-xl"></i>
-              <span className="block"> area sft </span>
-            </li>
-          </ul>
         </div>
         <div className="property-card__body py-0 mx-5">
           <div className=" border-t border-dashed"></div>
@@ -104,7 +86,7 @@ const FeaturedCardHome1 = ({
               </span>
             </span>
 
-            <Link href={`tour/${name?.replaceAll(" ", "-")}`}>
+            <Link href={`/tour/${name?.replaceAll(" ", "-")}`}>
               <Button>عرض التفاصيل</Button>
             </Link>
           </div>

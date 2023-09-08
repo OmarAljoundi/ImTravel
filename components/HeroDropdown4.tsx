@@ -1,12 +1,71 @@
 "use client";
-import { useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { CardIcon } from "@/public/data/icons";
 import { Button } from "./ui/button";
+import { QueryString } from "@/lib/utils";
+import qs from "query-string";
+import { usePathname, useRouter } from "next/navigation";
+import useDebounce from "@/hooks/useDebounce";
+import { useDomainStore } from "@/hooks/useDomain";
 
-export default function HeroDropdown4() {
-  const [value, setValue] = useState(40);
+const HeroDropdown4: FC<{
+  setSearch?: (search: QueryString) => void;
+  search?: QueryString;
+  onChange: boolean;
+}> = ({ onChange, search, setSearch }) => {
+  const pathname = usePathname();
+  const office = useDomainStore((x) => x.office);
+
+  const [value, setValue] = useState<number>(() => {
+    if (typeof window !== "undefined") {
+      const query = qs.parseUrl(window.location.href, {
+        arrayFormat: "comma",
+        decode: true,
+      }).query;
+
+      if (query.maxprice) {
+        return Number(query.maxprice);
+      }
+    }
+    return office!.maxPrice;
+  });
+  const debouncedValue = useDebounce<number>(value, 750);
+  const router = useRouter();
+
+  useEffect(() => {
+    const query = {
+      ...qs.parseUrl(window.location.href, {
+        arrayFormat: "comma",
+        decode: true,
+      }).query,
+      maxprice: value,
+    };
+
+    const url = qs.stringifyUrl(
+      {
+        url: pathname,
+        query,
+      },
+      {
+        skipNull: true,
+        skipEmptyString: true,
+        arrayFormat: "comma",
+        encode: true,
+      }
+    );
+
+    if (onChange) {
+      router.push(url);
+    } else {
+      //@ts-ignore
+      setSearch({
+        ...search,
+        maxprice: query.maxprice,
+      });
+    }
+  }, [debouncedValue, router]);
 
   return (
     <Button
@@ -28,7 +87,8 @@ export default function HeroDropdown4() {
               backgroundColor: "var(--primary)",
               borderColor: "var(--primary)",
             }}
-            max={500}
+            max={office!.maxPrice}
+            min={office!.minPrice}
             trackStyle={{ backgroundColor: "var(--primary)" }}
             value={value}
             onChange={(value) => setValue(value as number)}
@@ -37,4 +97,6 @@ export default function HeroDropdown4() {
       </div>
     </Button>
   );
-}
+};
+
+export default HeroDropdown4;

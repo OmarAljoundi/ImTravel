@@ -1,7 +1,7 @@
 "use client";
 import { useDomainStore } from "@/hooks/useDomain";
 import { hexToHSLString } from "@/lib/helpers";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 type DomainLayout = {
   children: ReactNode;
@@ -9,6 +9,7 @@ type DomainLayout = {
 
 export default function DomainLayout({ children }: DomainLayout) {
   const office = useDomainStore((s) => s.office);
+
   return (
     <div className={office?.primaryFont}>
       {children}

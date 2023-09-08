@@ -19,17 +19,8 @@ const Page = async ({ params: { slug, domain } }: Params) => {
     <main>
       <div className="bg-[var(--bg-2)]">
         <div className="container py-[30px] lg:py-[60px] px-3">
-          <div className="grid grid-cols-12 gap-4 lg:gap-6">
+          <div className="grid grid-cols-12 gap-4 ">
             <TourInfo tour={response.tour} />
-            <div className="col-span-4 lg:block hidden">
-              <BlurImage
-                alt={response.tour.name || ""}
-                src={response.tour.imageUrl || ""}
-                width={800}
-                className="rounded-2xl mb-3"
-                height={400}
-              />
-            </div>
           </div>
         </div>
       </div>

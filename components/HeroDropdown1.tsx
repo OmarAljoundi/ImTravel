@@ -27,26 +27,21 @@ const HeroDropdown1: FC<{
 }> = ({ onChange, search, setSearch }) => {
   const pathname = usePathname();
   const router = useRouter();
-
+  const searchParams = useSearchParams();
   const [selected, setSelected] = useState<
     { countryCode: string; label: string }[]
-  >(() => {
-    if (typeof window !== "undefined") {
-      const query = qs.parseUrl(window.location.href, {
-        arrayFormat: "comma",
-        decode: true,
-      }).query;
+  >([]);
 
-      if (query.country && query.country.length > 0) {
-        const labelSet = new Set(query.country);
-        const filteredObjects = europeanCountries.filter((obj) =>
-          labelSet.has(obj.label)
-        );
-        return filteredObjects;
-      }
+  useEffect(() => {
+    const country = searchParams.get("country");
+    if (country) {
+      const labelSet = new Set(country.split(","));
+      const filteredObjects = europeanCountries.filter((obj) =>
+        labelSet.has(obj.label)
+      );
+      setSelected(filteredObjects);
     }
-    return [];
-  });
+  }, []);
 
   useEffect(() => {
     const query = {

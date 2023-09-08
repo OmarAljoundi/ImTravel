@@ -1,3 +1,5 @@
+import { IOfficeLocations } from "./OfficeLocations";
+
 export interface IOffice {
   id: number;
   name: string;
@@ -15,4 +17,9 @@ export interface IOffice {
   createdDate: Date | null;
   modifiedDate: Date | null;
   slug: string | null;
+  tourIds: string;
+  totalTours: number;
+  minPrice: number;
+  maxPrice: number;
+  officeLocations: IOfficeLocations[];
 }

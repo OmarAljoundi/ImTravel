@@ -10,94 +10,99 @@ import Form from "./form";
 
 const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
   return (
-    <div className="col-span-12 lg:col-span-8">
-      <BlurImage
-        alt={tour.name || ""}
-        src={tour.imageUrl || ""}
-        width={800}
-        className="rounded-2xl block lg:hidden mb-3"
-        height={400}
-      />
+    <div className="col-span-12">
       <div className="bg-white rounded-2xl p-3 sm:p-4 lg:py-8 lg:px-5">
-        <div className="flex justify-between mb-2 py-4">
+        <div className="flex flex-col md:flex-row justify-between mb-2 py-4 gap-4">
           <h1 className="font-naskh text-3xl pr-2">{tour.name}</h1>
           <Form tour={tour} />
         </div>
+        <div className="grid lg:grid-cols-2 grid-cols-1 relative gap-4">
+          <div className="py-28 lg:py-16  bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10 relative">
+            <BlurImage
+              alt={tour.name || ""}
+              src={tour.imageUrl || ""}
+              fill
+              className="rounded-2xl block mb-3 p-3"
+            />
+          </div>
+          <div className="px-3 sm:px-4 lg:px-6 py-6 lg:py-16  bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10">
+            <div className="flex items-center justify-between flex-wrap gap-3 mb-8">
+              <ul className="flex gap-3 items-center">
+                <li>
+                  <Link
+                    href="#"
+                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
+                  >
+                    <i className="lab text-xl la-facebook-f"></i>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
+                  >
+                    <i className="lab text-xl la-twitter"></i>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
+                  >
+                    <i className="lab text-xl la-instagram"></i>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
+                  >
+                    <i className="lab text-xl la-linkedin-in"></i>
+                  </Link>
+                </li>
+              </ul>
+              <h2 className="h2 m-0 font-naskh"></h2>
+            </div>
+            <ul className="columns-1 md:columns-2  border-t border-dashed gap-md-0 divide-y divide-dashed font-naskh">
+              <li className="py-2">
+                <div className="grid items-center ">
+                  <span>رمز الرحلة</span>
+                  <span>
+                    <span className="text-primary">{tour.code}</span>
+                  </span>
+                </div>
+              </li>
 
-        <div className="p-3 sm:p-4 lg:p-6 bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10">
-          <div className="flex items-center justify-between flex-wrap gap-3 mb-8">
-            <ul className="flex gap-3 items-center">
-              <li>
-                <Link
-                  href="#"
-                  className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
-                >
-                  <i className="lab text-xl la-facebook-f"></i>
-                </Link>
+              <li className="py-2">
+                <div className="grid items-center ">
+                  <span>نقطة البداية</span>
+                  <span className="text-primary font-naskh">
+                    {GetFirstElement(tour.tourSections)?.title}{" "}
+                  </span>
+                </div>
               </li>
-              <li>
-                <Link
-                  href="#"
-                  className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
-                >
-                  <i className="lab text-xl la-twitter"></i>
-                </Link>
+              <li className="py-2">
+                <div className="grid items-center ">
+                  <span>المدة</span>
+                  <span>
+                    <span className="text-primary">
+                      {tour.numberOfDays} أيام
+                    </span>
+                  </span>
+                </div>
               </li>
-              <li>
-                <Link
-                  href="#"
-                  className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
-                >
-                  <i className="lab text-xl la-instagram"></i>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
-                >
-                  <i className="lab text-xl la-linkedin-in"></i>
-                </Link>
+              <li className="py-2">
+                <div className="grid items-center ">
+                  <span>نقطة النهاية</span>
+                  <span className="text-primary font-naskh">
+                    {GetLastElement(tour.tourSections)?.title}{" "}
+                  </span>
+                </div>
               </li>
             </ul>
-            <h2 className="h2 m-0 font-naskh"></h2>
           </div>
-          <ul className="columns-1 md:columns-2  border-t border-dashed gap-md-0 divide-y divide-dashed font-naskh">
-            <li className="py-2">
-              <div className="grid items-center ">
-                <span>رمز الرحلة</span>
-                <span>
-                  <span className="text-primary">{tour.code}</span>
-                </span>
-              </div>
-            </li>
-
-            <li className="py-2">
-              <div className="grid items-center ">
-                <span>نقطة البداية</span>
-                <span className="text-primary font-naskh">
-                  {GetFirstElement(tour.tourSections)?.title}{" "}
-                </span>
-              </div>
-            </li>
-            <li className="py-2">
-              <div className="grid items-center ">
-                <span>المدة</span>
-                <span>
-                  <span className="text-primary">{tour.numberOfDays} أيام</span>
-                </span>
-              </div>
-            </li>
-            <li className="py-2">
-              <div className="grid items-center ">
-                <span>نقطة النهاية</span>
-                <span className="text-primary font-naskh">
-                  {GetLastElement(tour.tourSections)?.title}{" "}
-                </span>
-              </div>
-            </li>
-          </ul>
         </div>
+
         {tour.additionalInfo && (
           <div className="p-3 sm:p-4 lg:p-6 bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10">
             <h4 className="mb-5 text-2xl font-semibold"> Overview </h4>

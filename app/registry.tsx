@@ -19,7 +19,7 @@ export default function StyledJsxRegistry({
 
   return (
     <QueryClientProvider client={new QueryClient()}>
-      <StyleRegistry registry={jsxStyleRegistry}>{children}</StyleRegistry>;
+      <StyleRegistry registry={jsxStyleRegistry}>{children}</StyleRegistry>
     </QueryClientProvider>
   );
 }
