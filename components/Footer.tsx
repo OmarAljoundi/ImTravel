@@ -24,7 +24,7 @@ const Footer = () => {
 
               <ul className="flex gap-3 flex-wrap">
                 {socialMedia?.map((i: any) => (
-                  <li>
+                  <li key={i.name}>
                     <Link
                       href={i.url}
                       className="border duration-300 hover:bg-primary hover:text-white grid place-content-center p-[10px] rounded-full"
