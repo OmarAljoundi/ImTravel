@@ -42,8 +42,7 @@ const Filter: FC<FilterOptions> = ({ onChange }) => {
   return (
     <div
       className={cn(
-        "p-3 sm:p-4 lg:py-6 lg:px-8 bg-white rounded-2xl shadow-lg mb-5 grid gap-4 grid-cols-1 md:grid-cols-2",
-        onChange ? "lg:grid-cols-4" : "lg:grid-cols-5"
+        "p-3 sm:p-4 lg:py-6 lg:px-8 bg-white rounded-2xl shadow-lg mb-5 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
       )}
     >
       <section>
@@ -53,18 +52,22 @@ const Filter: FC<FilterOptions> = ({ onChange }) => {
           setSearch={setSearch}
         />
       </section>
+      {onChange && (
+        <section>
+          <HeroDropdown3 />
+        </section>
+      )}
+
       <section>
-        <HeroDropdown2
+        <HeroDropdown4
           onChange={onChange}
           search={search}
           setSearch={setSearch}
         />
       </section>
+
       <section>
-        <HeroDropdown3 />
-      </section>
-      <section>
-        <HeroDropdown4
+        <HeroDropdown2
           onChange={onChange}
           search={search}
           setSearch={setSearch}

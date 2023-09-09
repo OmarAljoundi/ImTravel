@@ -17,11 +17,12 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
           <Form tour={tour} />
         </div>
         <div className="grid lg:grid-cols-2 grid-cols-1 relative gap-4">
-          <div className="py-28 lg:py-16  bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10 relative">
+          <div className="  bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10 relative">
             <BlurImage
               alt={tour.name || ""}
               src={tour.imageUrl || ""}
-              fill
+              width={640}
+              height={427}
               className="rounded-2xl block mb-3 p-3"
             />
           </div>
@@ -31,7 +32,7 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                 <li>
                   <Link
                     href="#"
-                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
+                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary text-white"
                   >
                     <i className="lab text-xl la-facebook-f"></i>
                   </Link>
@@ -39,7 +40,7 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                 <li>
                   <Link
                     href="#"
-                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
+                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary text-white"
                   >
                     <i className="lab text-xl la-twitter"></i>
                   </Link>
@@ -47,7 +48,7 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                 <li>
                   <Link
                     href="#"
-                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
+                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary text-white"
                   >
                     <i className="lab text-xl la-instagram"></i>
                   </Link>
@@ -55,7 +56,7 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                 <li>
                   <Link
                     href="#"
-                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary hover:text-white"
+                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary text-white"
                   >
                     <i className="lab text-xl la-linkedin-in"></i>
                   </Link>

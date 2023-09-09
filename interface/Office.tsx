@@ -21,5 +21,9 @@ export interface IOffice {
   totalTours: number;
   minPrice: number;
   maxPrice: number;
+  socialMedia: any;
+  seoTitle: string;
+  seoDescription: string;
+  seoTags: string;
   officeLocations: IOfficeLocations[];
 }

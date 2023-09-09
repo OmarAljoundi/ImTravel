@@ -3,6 +3,7 @@ import Form from "./form";
 import TourInfo from "./tour-info";
 import { getTourBySlug } from "@/lib/fetchers";
 import BlurImage from "@/components/BlurImage";
+import Breadcrumb from "@/components/Breadcrumb";
 export const revalidate = 0;
 type Params = {
   params: {
@@ -19,6 +20,22 @@ const Page = async ({ params: { slug, domain } }: Params) => {
     <main>
       <div className="bg-[var(--bg-2)]">
         <div className="container py-[30px] lg:py-[60px] px-3">
+          <Breadcrumb
+            items={[
+              {
+                label: "الرئيسية",
+                url: "/",
+              },
+              {
+                label: "الوجهات السياحية",
+                url: "/tour-listing",
+              },
+              {
+                label: response.tour.name!,
+                url: "/tour-listing",
+              },
+            ]}
+          />
           <div className="grid grid-cols-12 gap-4 ">
             <TourInfo tour={response.tour} />
           </div>
