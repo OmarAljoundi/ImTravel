@@ -1,3 +1,4 @@
+export const revalidate = false;
 import { IOfficeResponse } from "@/interface/IOfficeResponse";
 import { ILocationResponse, ITourResponse } from "@/interface/Response";
 import { SearchQuery, eFilterOperator } from "@/interface/Search";
