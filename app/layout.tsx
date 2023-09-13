@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import "./globals.css";
 import "@/public/styles/styles.scss";
 import "@/public/styles/line-awesome.min.css";
