@@ -80,12 +80,12 @@ const FeaturedCardHome1 = ({
           <div className=" border-t border-dashed"></div>
         </div>
         <div className="px-2 sm:px-5 pb-5 pt-3">
-          <div className="flex flex-wrap justify-between items-center font-naskh">
+          <div className="flex flex-wrap justify-between items-center ">
             <span className="text-primary text-xl font-medium">
-              {price} ر.ع
-              <span className="text-base text-neutral-700">
+              {price}
+              <span className="text-base  font-medium text-primary text-neutral-700">
                 {" "}
-                / للشخص في الغرفة المزدوجة{" "}
+                / للشخص في الغرفة الثانية{" "}
               </span>
             </span>
 

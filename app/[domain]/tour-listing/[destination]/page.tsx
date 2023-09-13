@@ -1,4 +1,4 @@
-export const revalidate = false;
+export const revalidate = 0;
 
 import RenderTours from "../(fetcher)/render-tours";
 

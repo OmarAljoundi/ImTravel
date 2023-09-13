@@ -42,7 +42,7 @@ const Filter: FC<FilterOptions> = ({ onChange }) => {
   return (
     <div
       className={cn(
-        "p-3 sm:p-4 lg:py-6 lg:px-8 bg-white rounded-2xl shadow-lg mb-5 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+        "p-3 sm:p-4 lg:py-6 lg:px-8 bg-white rounded-2xl shadow-lg mb-5 grid gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-4"
       )}
     >
       <section>
@@ -59,15 +59,14 @@ const Filter: FC<FilterOptions> = ({ onChange }) => {
       )}
 
       <section>
-        <HeroDropdown4
+        <HeroDropdown2
           onChange={onChange}
           search={search}
           setSearch={setSearch}
         />
       </section>
-
-      <section>
-        <HeroDropdown2
+      <section className={cn(!onChange ? "col-span-2  lg:col-span-1" : "")}>
+        <HeroDropdown4
           onChange={onChange}
           search={search}
           setSearch={setSearch}

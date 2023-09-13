@@ -63,7 +63,7 @@ export const queryString:QueryString = {
 }
 export const daysFilter = [
   { label: "من 5 الى 7 ايام", value: "t1",period_min:5,period_max:7 },
-   { label: "من 8 الى 10 ايام", value: "t2",period_min:8,period_max:10  },
-    { label: "من 11 الى 20 يوم", value: "t3",period_min:11,period_max:20  },
+   { label: "من 8 الى 15 ايام", value: "t2",period_min:8,period_max:15  },
+    { label: "من 16 الى 24 يوم", value: "t3",period_min:16,period_max:24  },
  
 ]

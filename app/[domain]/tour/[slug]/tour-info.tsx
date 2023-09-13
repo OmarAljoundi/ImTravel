@@ -1,19 +1,18 @@
 "use client";
-
 import BlurImage from "@/components/BlurImage";
-import { Button } from "@/components/ui/button";
 import { ITour } from "@/interface/Tour";
 import { GetFirstElement, GetLastElement } from "@/lib/utils";
 import Link from "next/link";
 import { FC } from "react";
 import Form from "./form";
+import { Separator } from "@/components/ui/separator";
 
 const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
   return (
     <div className="col-span-12">
       <div className="bg-white rounded-2xl p-3 sm:p-4 lg:py-8 lg:px-5">
         <div className="flex flex-col md:flex-row justify-between mb-2 py-4 gap-4">
-          <h1 className="font-naskh text-3xl pr-2">{tour.name}</h1>
+          <h1 className="font-primary text-3xl pr-2">{tour.name}</h1>
           <Form tour={tour} />
         </div>
         <div className="grid lg:grid-cols-2 grid-cols-1 relative gap-4">
@@ -62,9 +61,30 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                   </Link>
                 </li>
               </ul>
-              <h2 className="h2 m-0 font-naskh"></h2>
+              <h2 className="h2 m-0 font-primary"></h2>
             </div>
-            <ul className="columns-1 md:columns-2  border-t border-dashed gap-md-0 divide-y divide-dashed font-naskh">
+            <ul className="columns-1 md:columns-2  border-t border-dashed gap-md-0 divide-y divide-dashed font-primary">
+              <li className="py-2">
+                <div className="grid items-center w-fit">
+                  <span>السعر</span>
+                  <span className="text-primary  font-medium">
+                    {tour.price} ر.ع
+                    <span className="text-base text-neutral-700 truncate">
+                      {" "}
+                      / للشخص في الغرفة الثانية{" "}
+                    </span>
+                  </span>
+                </div>
+              </li>
+
+              <li className="py-2">
+                <div className="grid items-center ">
+                  <span>الدول</span>
+                  <span className="text-primary font-primary">
+                    {tour?.tourCountries?.map((i) => i.label)?.join(", ")}
+                  </span>
+                </div>
+              </li>
               <li className="py-2">
                 <div className="grid items-center ">
                   <span>رمز الرحلة</span>
@@ -76,27 +96,11 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
 
               <li className="py-2">
                 <div className="grid items-center ">
-                  <span>نقطة البداية</span>
-                  <span className="text-primary font-naskh">
-                    {GetFirstElement(tour.tourSections)?.title}{" "}
-                  </span>
-                </div>
-              </li>
-              <li className="py-2">
-                <div className="grid items-center ">
                   <span>المدة</span>
                   <span>
                     <span className="text-primary">
                       {tour.numberOfDays} أيام
                     </span>
-                  </span>
-                </div>
-              </li>
-              <li className="py-2">
-                <div className="grid items-center ">
-                  <span>نقطة النهاية</span>
-                  <span className="text-primary font-naskh">
-                    {GetLastElement(tour.tourSections)?.title}{" "}
                   </span>
                 </div>
               </li>
@@ -112,9 +116,8 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
         )}
 
         <div className="p-3 sm:p-4 lg:p-6 bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10">
-          <h4 className="mb-6 text-2xl font-semibold font-kufi">
-            {" "}
-            قصة الرحلة{" "}
+          <h4 className="mb-6 text-2xl font-semibold font-primary">
+            يوميات البرنامج
           </h4>
           <ul className="flex flex-col gap-6">
             {tour?.tourSections?.map(({ description, title, id }, index) => (
@@ -126,7 +129,11 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                   <div className="grid place-content-center ml-3 md:ml-0 relative w-28 h-28 rounded-full bg-primary after:scale-[1.18] text-white shrink-0 after:w-full after:h-full after:absolute after:border-dashed after:border after:border-[var(--primary)] after:rounded-full">
                     <div className="text-center">
                       <p className="text-lg mb-0"> اليوم </p>
-                      <h2 className="mb-0 text-white"> 0{index + 1} </h2>
+                      <h2 className="mb-0 text-white">
+                        {" "}
+                        {index < 9 ? 0 : ""}
+                        {index + 1}{" "}
+                      </h2>
                     </div>
                   </div>
                   <div className="flex-grow rounded-2xl bg-white shadow-lg p-3 sm:p-4 lg:p-6">
@@ -147,35 +154,42 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
           </ul>
         </div>
         <div className="p-3 sm:p-4 lg:p-6 bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10">
-          <h4 className="mb-0 text-2xl font-semibold font-naskh">
+          <h4 className="mb-0 text-2xl font-semibold font-primary">
             مميزات البرنامج
           </h4>
           <div className="border border-dashed my-5"></div>
-          <h6 className="mb-4 font-semibold font-naskh"> ما يشمله البرنامج </h6>
+          <h6 className="mb-4 font-semibold font-primary">
+            البرنامج يشمل التالي
+          </h6>
           <ul className="flex flex-col gap-4 mb-10">
             {tour?.tourIncludes?.map((i) => (
               <li key={i.id}>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-[var(--primary-light)]">
-                    <i className="las la-check text-lg text-primary"></i>
+                  <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-green-500">
+                    <i className="las la-check text-lg text-white"></i>
                   </div>
-                  <span className="inline-block font-naskh">{i.details}</span>
+                  <div className="grid items-start">
+                    <span className="font-bold">{i.title}</span>
+                    <span className="inline-block font-primary ">
+                      {i.details}
+                    </span>
+                  </div>
                 </div>
               </li>
             ))}
           </ul>
-          <h6 className="mb-4 font-semibold font-naskh">
-            {" "}
-            ما لايشمله البرنامج{" "}
+          <Separator className="my-4" />
+          <h6 className="mb-4 font-semibold font-primary">
+            البرنامج لا يشمل التالي
           </h6>
           <ul className="flex flex-col gap-4 mb-10">
             {tour?.tourExcludes?.map(({ id, details, title }) => (
               <li key={id}>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-[#FFF9ED]">
-                    <i className="las la-times text-xl text-[#9C742B]"></i>
+                  <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-red-700">
+                    <i className="las la-times text-xl text-white"></i>
                   </div>
-                  <span className="inline-block font-naskh">{details}</span>
+                  <span className="inline-block font-primary">{details}</span>
                 </div>
               </li>
             ))}

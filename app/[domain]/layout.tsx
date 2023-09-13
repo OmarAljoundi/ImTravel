@@ -1,4 +1,4 @@
-export const revalidate = false;
+export const revalidate = 0;
 
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";

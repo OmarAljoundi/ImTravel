@@ -55,40 +55,17 @@ const Property = () => {
           <h2 className="h2 mt-3 pb-8 lg:pb-14"></h2>
         </div>
         <div className="">
-          <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-            <div className="flex justify-center lg:justify-between flex-wrap items-center mb-6 gap-4 px-3">
-              <Tab.List className="flex gap-3 flex-wrap">
-                {countriesInQuickSearch.map((category) => (
-                  <Tab
-                    key={category}
-                    className={({ selected }) =>
-                      classNames(
-                        "rounded-full py-3 px-5 lg:px-7 lg:py-4 leading-5 duration-300 font-semibold text-white text-xs lg:text-lg",
-                        selected
-                          ? "bg-primary shadow text-white outline-none"
-                          : "text-neutral-600 hover:bg-primary bg-[var(--primary-light)] hover:text-white"
-                      )
-                    }
-                  >
-                    {category}
-                  </Tab>
-                ))}
-              </Tab.List>
+          <div className="mt-2">
+            <div className="grid grid-cols-12 gap-6">
+              {isLoading ? (
+                <TourCardLoading numberOfCards={6} />
+              ) : (
+                tours?.map((tour, idx) => (
+                  <FeaturedCardHome1 key={tour.id} {...tour} />
+                ))
+              )}
             </div>
-            <Tab.Panels className="mt-2">
-              {countriesInQuickSearch.map((i) => (
-                <Tab.Panel className="grid grid-cols-12 gap-6" key={i}>
-                  {isLoading ? (
-                    <TourCardLoading numberOfCards={6} />
-                  ) : (
-                    tours?.map((tour, idx) => (
-                      <FeaturedCardHome1 key={tour.id} {...tour} />
-                    ))
-                  )}
-                </Tab.Panel>
-              ))}
-            </Tab.Panels>
-          </Tab.Group>
+          </div>
         </div>
       </div>
     </section>

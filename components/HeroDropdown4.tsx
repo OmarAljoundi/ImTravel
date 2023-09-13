@@ -18,7 +18,7 @@ const HeroDropdown4: FC<{
   const pathname = usePathname();
   const office = useDomainStore((x) => x.office);
 
-  const [value, setValue] = useState<number>(() => {
+  const [value, setValue] = useState<number | undefined>(() => {
     if (typeof window !== "undefined") {
       const query = qs.parseUrl(window.location.href, {
         arrayFormat: "comma",
@@ -29,9 +29,9 @@ const HeroDropdown4: FC<{
         return Number(query.maxprice);
       }
     }
-    return office!.maxPrice;
+    return undefined;
   });
-  const debouncedValue = useDebounce<number>(value, 750);
+  const debouncedValue = useDebounce<number | undefined>(value, 750);
   const router = useRouter();
 
   useEffect(() => {
