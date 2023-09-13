@@ -49,7 +49,7 @@ const Property = () => {
       <div className="container">
         <div className="max-w-[570px] mx-auto flex flex-col items-center text-center px-3">
           <SubHeadingBtn
-            text="الرحلات المميزة"
+            text="الرحلات الأكثر مبيعا"
             classes="bg-[var(--primary-light)] "
           />
           <h2 className="h2 mt-3 pb-8 lg:pb-14"></h2>

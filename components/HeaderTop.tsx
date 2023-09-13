@@ -11,18 +11,10 @@ import { cn } from "@/lib/utils";
 const HeaderTop = () => {
   const [scrolled, setScrolled] = useState(false);
   const office = useDomainStore((state) => state.office);
-  useEffect(() => {
-    document.addEventListener("scroll", () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    });
-  }, []);
+
   return (
     <header
-      className={`z-30 border-y sticky block top-0  bg-[var(--bg-1)] ${
+      className={`z-30 border-y  block top-0  bg-[var(--bg-1)] ${
         scrolled &&
         "z-50 shadow-md bg-white bg-opacity-70 backdrop-blur border-0"
       } duration-300 ${office?.primaryFont}`}

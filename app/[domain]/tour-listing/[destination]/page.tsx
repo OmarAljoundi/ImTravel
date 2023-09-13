@@ -1,3 +1,5 @@
+export const revalidate = false;
+
 import RenderTours from "../(fetcher)/render-tours";
 
 const DestinationPage = () => {

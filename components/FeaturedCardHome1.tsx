@@ -32,7 +32,10 @@ const FeaturedCardHome1 = ({
     >
       <div className="bg-white shadow-xl rounded-2xl p-2">
         <div className="rounded-2xl relative group">
-          <div className="property-card__img">
+          <Link
+            href={`/tour/${name?.replaceAll(" ", "-")}`}
+            className="block property-card__img"
+          >
             <Image
               width={400}
               height={238}
@@ -40,7 +43,7 @@ const FeaturedCardHome1 = ({
               alt="image"
               className="rounded-2xl w-full h-[238px]"
             />
-          </div>
+          </Link>
 
           <button
             onClick={handleFavorite}
