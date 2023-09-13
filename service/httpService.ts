@@ -1,5 +1,3 @@
-import axios, { AxiosRequestConfig } from "axios";
-
 const onRequest = async <T>(
   endPoint: string,
   method: "POST" | "GET" | "PUT" | "DELETE",
@@ -14,32 +12,32 @@ const onRequest = async <T>(
     headers.append("Authorization", `Bearer ${token}`);
   }
 
-  const requestOptions: AxiosRequestConfig = {
+  const requestOptions: RequestInit = {
     method,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+    headers,
+    next: {
+      revalidate: false,
     },
   };
 
   if (method === "POST" || method === "PUT") {
-    requestOptions.data = data;
+    requestOptions.body = JSON.stringify(data);
   }
 
   try {
-    const { data, status } = await axios(
+    const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}${endPoint}`,
       requestOptions
     );
 
-    if (status != 200) {
-      throw new Error(`Request failed with status: ${status}`);
+    if (!response.ok) {
+      throw new Error(`Request failed with status: ${response.status}`);
     }
 
-    return data as Promise<T>;
+    const responseData: T = await response.json();
+    return responseData;
   } catch (ex) {
-    console.log(ex);
+    console.error(ex);
     throw new Error("Error while fetching data: " + ex);
   }
 };
