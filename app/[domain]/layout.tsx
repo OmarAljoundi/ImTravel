@@ -7,18 +7,18 @@ import { LayoutProviders } from "@/components/Providers/LayoutProviders";
 import DomainLayout from "@/components/Providers/DomainProvider";
 import { Metadata } from "next";
 
-export async function generateStaticParams() {
-  const sites = await getSitesData();
-  const allPaths = [...sites.map(({ slug }) => slug)].filter(
-    (path) => path
-  ) as Array<string>;
+// export async function generateStaticParams() {
+//   const sites = await getSitesData();
+//   const allPaths = [...sites.map(({ slug }) => slug)].filter(
+//     (path) => path
+//   ) as Array<string>;
 
-  return allPaths.map((domain) => ({
-    params: {
-      domain,
-    },
-  }));
-}
+//   return allPaths.map((domain) => ({
+//     params: {
+//       domain,
+//     },
+//   }));
+// }
 
 export async function generateMetadata({
   params,
