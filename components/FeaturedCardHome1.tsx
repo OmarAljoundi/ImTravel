@@ -45,16 +45,14 @@ const FeaturedCardHome1 = ({
             />
           </Link>
 
-          <button
+          <Button
             onClick={handleFavorite}
-            className="absolute z-10 inline-block text-primary top-4 right-4 rounded-full bg-white p-2.5"
+            className="absolute z-10 
+            inline-block text-primary top-4 right-4 rounded-full w-11 
+            font-bold h-auto bg-primary text-white shadow-xl p-2.5"
           >
-            {favourite ? (
-              <HeartIcon className="w-5 h-5 text-[var(--tertiary)]" />
-            ) : (
-              <HeartIconOutline />
-            )}
-          </button>
+            {numberOfDays} {numberOfDays! > 10 ? "يوم" : "أيام"}
+          </Button>
         </div>
         <div className="p-2 sm:p-4 lg:p-5">
           <div className="flex items-center gap-1 mb-4 mt-5 sm:mt-3">

@@ -1,7 +1,7 @@
 export const revalidate = 0;
 import { IOfficeResponse } from "@/interface/IOfficeResponse";
 import { ILocationResponse, ITourResponse } from "@/interface/Response";
-import { SearchQuery, eFilterOperator } from "@/interface/Search";
+import { Order, SearchQuery, eFilterOperator } from "@/interface/Search";
 import { http } from "@/service/httpService";
 import { daysFilter } from "./utils";
 
@@ -86,6 +86,11 @@ export async function getTours(
       });
     }
   }
+
+  _SQ.OrderByOptions.push({
+    MemberName: "Price",
+    SortOrder: Order.ASC,
+  });
 
   const result = await http<ITourResponse>("/Tour/SearchBusiness").post(_SQ);
 
