@@ -21,7 +21,7 @@ const Form: FC<{ tour: ITour }> = ({ tour }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-fit">طريقة الحجز</Button>
+        <Button className="w-full md:w-fit">طريقة الحجز</Button>
       </DialogTrigger>
       <DialogContent className={cn("sm:max-w-[425px]", office?.primaryFont)}>
         <DialogHeader>

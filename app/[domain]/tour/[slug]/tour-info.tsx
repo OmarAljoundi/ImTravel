@@ -1,19 +1,28 @@
 "use client";
 import BlurImage from "@/components/BlurImage";
 import { ITour } from "@/interface/Tour";
-import { GetFirstElement, GetLastElement } from "@/lib/utils";
 import Link from "next/link";
 import { FC } from "react";
 import Form from "./form";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { generate } from "./pdf-document";
+import { useDomainStore } from "@/hooks/useDomain";
 
 const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
+  const office = useDomainStore((x) => x.office);
   return (
     <div className="col-span-12">
       <div className="bg-white rounded-2xl p-3 sm:p-4 lg:py-8 lg:px-5">
         <div className="flex flex-col md:flex-row justify-between mb-2 py-4 gap-4">
           <h1 className="font-primary text-3xl pr-2">{tour.name}</h1>
           <Form tour={tour} />
+          <Button
+            className="w-full md:w-fit"
+            onClick={async () => await generate(tour, office!)}
+          >
+            تحميل البرنامج
+          </Button>
         </div>
         <div className="grid lg:grid-cols-2 grid-cols-1 relative gap-4">
           <div className="  bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10 relative">
