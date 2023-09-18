@@ -24,12 +24,14 @@ const Destinations = () => {
             >
               <div className="relative rounded-2xl group">
                 <div className="listing-card__img aspect-[4/3]">
-                  <Image
-                    src={location.imageUrl}
-                    fill
-                    alt="image"
-                    className=" w-full rounded-2xl"
-                  />
+                  {location.imageUrl && (
+                    <Image
+                      src={location.imageUrl}
+                      fill
+                      alt="image"
+                      className=" w-full rounded-2xl"
+                    />
+                  )}
                 </div>
                 <div
                   className="absolute top-0 left-0 flex flex-col justify-between h-full

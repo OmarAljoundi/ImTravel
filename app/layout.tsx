@@ -6,11 +6,6 @@ import StyledJsxRegistry from "./registry";
 import { cn } from "@/lib/utils";
 import { Kufi, Naskh, Sans } from "./fonts";
 
-export const metadata = {
-  title: "Placewise - Online Booking NextJS Template",
-  description: "A nextjs template for online booking system",
-};
-
 export default function RootLayout({
   children,
 }: {
