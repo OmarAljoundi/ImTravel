@@ -206,7 +206,7 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                     <span className="inline-block font-primary ">
                       <div className="grid items-center flex-wrap">
                         {i.details.split(",").map((i) => (
-                          <div className="flex items-center">
+                          <div className="flex items-center" key={i}>
                             <div>
                               <Dot className="text-green-900 w-6 h-6" />
                             </div>

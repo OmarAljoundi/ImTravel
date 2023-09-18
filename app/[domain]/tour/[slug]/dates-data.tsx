@@ -22,8 +22,12 @@ const DatesData: FC<{ tour: ITour }> = ({ tour }) => {
       </PopoverTrigger>
       <PopoverContent className="w-full">
         <div className="grid grid-cols-2 gap-6">
-          {tour.tourPricing?.map((item) => (
-            <Button size={"sm"} className={cn("text-sm", office?.primaryFont)}>
+          {tour.tourPricing?.map((item, index) => (
+            <Button
+              size={"sm"}
+              className={cn("text-sm", office?.primaryFont)}
+              key={index}
+            >
               {format(new Date(item.tourDate!), "PPP", { locale: ar })}
             </Button>
           ))}
