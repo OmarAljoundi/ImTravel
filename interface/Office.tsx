@@ -25,5 +25,6 @@ export interface IOffice {
   seoTitle: string;
   seoDescription: string;
   seoTags: string;
+  bestTours: string;
   officeLocations: IOfficeLocations[];
 }

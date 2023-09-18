@@ -16,38 +16,34 @@ export function gc(size:number | null) {
 }
 
 export const europeanCountries = [
-  { label: "النمسا", countryCode: "AT" },
-  { label: "بلجيكا", countryCode: "BE" },
-  { label: "بلغاريا", countryCode: "BG" },
-  { label: "كرواتيا", countryCode: "HR" },
-  { label: "قبرص", countryCode: "CY" },
-  { label: "التشيك", countryCode: "CZ" },
-  { label: "الدنمارك", countryCode: "DK" },
-  { label: "استونيا", countryCode: "EE" },
-  { label: "فنلندا", countryCode: "FI" },
-  { label: "فرنسا", countryCode: "FR" },
-  { label: "المانيا", countryCode: "DE" },
-  { label: "اليونان", countryCode: "GR" },
-  { label: "هنغاريا", countryCode: "HU" },
-  { label: "ايسلندا", countryCode: "IS" },
-  { label: "ايرلندا", countryCode: "IE" },
+  { label: "سويسرا", countryCode: "CH" },
   { label: "ايطاليا", countryCode: "IT" },
-  { label: "لاتفيا", countryCode: "LV" },
-  { label: "ليتوانيا", countryCode: "LT" },
-  { label: "لوكسمبورج", countryCode: "LU" },
-  { label: "مالطا", countryCode: "MT" },
+  { label: "النمسا", countryCode: "AT" },
+  { label: "فرنسا", countryCode: "FR" },
+  { label: "اسبانيا", countryCode: "ES" },
+  { label: "التشيك", countryCode: "CZ" },
+  { label: "المانيا", countryCode: "DE" },
   { label: "هولندا", countryCode: "NL" },
   { label: "النرويج", countryCode: "NO" },
+  { label: "المغرب", countryCode: "MA" },
+  { label: "روسيا", countryCode: "RU" },
+  { label: "المجر", countryCode: "HU" },
+  { label: "اليونان", countryCode: "GR" },
   { label: "بولندا", countryCode: "PL" },
   { label: "البرتغال", countryCode: "PT" },
-  { label: "رومانيا", countryCode: "RO" },
-  { label: "سلوفاكيا", countryCode: "SK" },
-  { label: "سلوفينيا", countryCode: "SI" },
-  { label: "اسبانيا", countryCode: "ES" },
+  { label: "الدنمارك", countryCode: "DK" },
   { label: "السويد", countryCode: "SE" },
-  { label: "سويسرا", countryCode: "CH" },
-  { label: "المملكة المتحدة", countryCode: "GB" },
-];
+  { label: "فنلندا", countryCode: "FI" },
+  { label: "تركيا", countryCode: "TR" },
+  { label: "البرتغال", countryCode: "PT" },
+  { label: "استونيا", countryCode: "EE" },
+  { label: "لاتفيا", countryCode: "LV" },
+  { label: "ليتوانيا", countryCode: "LT" },
+  { label: "بلغاريا", countryCode: "BG" },
+  { label: "رومانيا", countryCode: "RO" },
+  { label: "سلوفينيا", countryCode: "SI" },
+  { label: "كرواتيا", countryCode: "HR" }
+]
 export type QueryString = {
   country:any[],
   days:any[],
@@ -62,8 +58,8 @@ export const queryString:QueryString = {
 
 }
 export const daysFilter = [
-  { label: "من 5 الى 7 ايام", value: "t1",period_min:5,period_max:7 },
-   { label: "من 8 الى 15 ايام", value: "t2",period_min:8,period_max:15  },
-    { label: "من 16 الى 24 يوم", value: "t3",period_min:16,period_max:24  },
+  { label: "من 5 الى 8 ايام", value: "t1",period_min:5,period_max:8 },
+   { label: "من 9 الى 12 ايام", value: "t2",period_min:9,period_max:12  },
+    { label: "من 13 الى 24 يوم", value: "t3",period_min:13,period_max:24  },
  
 ]

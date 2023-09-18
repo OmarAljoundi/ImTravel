@@ -19,12 +19,15 @@ import { Separator } from "./ui/separator";
 import Image from "next/image";
 import qs from "query-string";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDomainStore } from "@/hooks/useDomain";
+import { X } from "lucide-react";
 
 const HeroDropdown1: FC<{
   setSearch?: (search: any) => void;
   search?: QueryString;
   onChange: boolean;
 }> = ({ onChange, search, setSearch }) => {
+  const office = useDomainStore((x) => x.office);
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -95,7 +98,7 @@ const HeroDropdown1: FC<{
               >
                 {selected.length}
               </Badge>
-              <div className="hidden space-x-1 lg:flex">
+              <div className="hidden space-x-1 lg:flex lg:gap-1">
                 {selected.length > 2 ? (
                   <Badge
                     variant="secondary"
@@ -111,8 +114,12 @@ const HeroDropdown1: FC<{
                         variant="secondary"
                         key={option.label}
                         className="rounded-sm px-1 font-normal"
+                        onClick={() =>
+                          setSelected([...selected.filter((x) => x != option)])
+                        }
                       >
                         {option.label}
+                        <X className="border  rounded-lg w-4 h-4 mr-2 text-white bg-red-500/70" />
                       </Badge>
                     ))
                 )}
@@ -121,7 +128,10 @@ const HeroDropdown1: FC<{
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent
+        className={cn("w-[200px] p-0", office?.primaryFont)}
+        align="start"
+      >
         <Command>
           <CommandInput placeholder={"ابحث عن الدولة"} className="ml-4" />
           <CommandList>
@@ -155,11 +165,6 @@ const HeroDropdown1: FC<{
                       className="ml-2 h-4 w-4 text-muted-foreground"
                     />
                     <span>{option.label}</span>
-                    {/* {facets?.get(option.value) && (
-                      <span className="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {facets.get(option.value)}
-                      </span>
-                    )} */}
                   </CommandItem>
                 );
               })}

@@ -11,20 +11,15 @@ import TourCardLoading from "./TourCardLoading";
 import FeaturedCardHome1 from "./FeaturedCardHome1";
 import { useDomainStore } from "@/hooks/useDomain";
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
 const Property = () => {
-  const countriesInQuickSearch = ["النمسا", "المانيا", "ايطاليا", "فرنسا"];
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const office = useDomainStore((x) => x.office);
 
   const fetchTours = async () => {
     const response = await getTours(
-      office!.tourIds,
-      countriesInQuickSearch[selectedIndex],
+      office!.bestTours,
+      undefined,
       null,
       undefined,
       6

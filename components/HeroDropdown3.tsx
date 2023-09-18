@@ -49,7 +49,10 @@ const HeroDropdown3 = () => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent
+        className={cn("w-[200px] p-0", office?.primaryFont)}
+        align="start"
+      >
         <Command>
           <CommandList>
             <CommandEmpty>لاتوجد نتائج</CommandEmpty>

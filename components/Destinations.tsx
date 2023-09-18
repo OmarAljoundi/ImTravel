@@ -45,7 +45,8 @@ const Destinations = () => {
                   <div>
                     <Link
                       href="hotel-listing-grid"
-                      className="inline-block py-2 px-5 rounded-full bg-[var(--tertiary)] absolute top-6 left-6 w-max"
+                      className="inline-block py-2 px-5  absolute top-6 left-6  text-primary  rounded-full w-15 
+                          font-bold h-auto bg-primary text-white shadow-xl p-2.5"
                     >
                       {location.tourIds.split(",").length}{" "}
                       {location.tourIds.split(",").length > 10
@@ -55,9 +56,9 @@ const Destinations = () => {
                   </div>
                   <div className="self-end px-5 pb-5 flex flex-wrap w-full gap-4 items-center justify-between z-10">
                     <div>
-                      <div className="flex gap-2 items-center">
+                      <div className="flex gap-2 items-center ">
                         <i className="las la-map-marker-alt text-3xl text-[#9C742B]"></i>
-                        <h4 className="lg:text-2xl text-white font-semibold sm:text-xs">
+                        <h4 className="md:text-lg lg:text-sm xl:text-lg truncate text-white font-semibold text-base sm:text-2xl">
                           {location.name}
                         </h4>
                       </div>

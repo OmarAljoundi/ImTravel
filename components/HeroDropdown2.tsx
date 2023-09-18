@@ -17,12 +17,15 @@ import { QueryString, cn, daysFilter, europeanCountries } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 import qs from "query-string";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDomainStore } from "@/hooks/useDomain";
+import { X } from "lucide-react";
 
 const HeroDropdown2: FC<{
   setSearch?: (search: any) => void;
   search?: QueryString;
   onChange: boolean;
 }> = ({ onChange, search, setSearch }) => {
+  const office = useDomainStore((x) => x.office);
   const pathname = usePathname();
   const [selected, setSelected] = useState<{ value: string; label: string }[]>(
     []
@@ -111,8 +114,12 @@ const HeroDropdown2: FC<{
                         variant="secondary"
                         key={option.label}
                         className="rounded-sm px-1 font-normal"
+                        onClick={() =>
+                          setSelected([...selected.filter((x) => x != option)])
+                        }
                       >
                         {option.label}
+                        <X className="border  rounded-lg w-4 h-4 mr-2 text-white bg-red-500/70" />
                       </Badge>
                     ))
                 )}
@@ -121,7 +128,10 @@ const HeroDropdown2: FC<{
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent
+        className={cn("w-[200px] p-0", office?.primaryFont)}
+        align="start"
+      >
         <Command>
           <CommandList>
             <CommandEmpty>لاتوجد نتائج</CommandEmpty>

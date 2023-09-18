@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { generate } from "./pdf-document";
 import { useDomainStore } from "@/hooks/useDomain";
+import DatesData from "./dates-data";
+import { Dot, Hotel } from "lucide-react";
 
 const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
   const office = useDomainStore((x) => x.office);
@@ -25,7 +27,7 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
           </Button>
         </div>
         <div className="grid lg:grid-cols-2 grid-cols-1 relative gap-4">
-          <div className="  bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10 relative">
+          <div className="bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10 relative">
             <BlurImage
               alt={tour.name || ""}
               src={tour.imageUrl || ""}
@@ -72,33 +74,36 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
               </ul>
               <h2 className="h2 m-0 font-primary"></h2>
             </div>
-            <ul className="columns-1 md:columns-2  border-t border-dashed gap-md-0 divide-y divide-dashed font-primary">
-              <li className="py-2">
-                <div className="grid items-center w-fit">
-                  <span>السعر</span>
-                  <span className="text-primary  font-medium">
-                    {tour.price} ر.ع
-                    <span className="text-base text-neutral-700 truncate">
-                      {" "}
-                      / للشخص في الغرفة الثانية{" "}
-                    </span>
-                  </span>
-                </div>
-              </li>
-
+            <ul className="grid grid-cols-1 xl:grid-cols-2   border-t border-dashed gap-md-0 divide-y divide-dashed font-primary">
               <li className="py-2">
                 <div className="grid items-center ">
                   <span>الدول</span>
                   <span className="text-primary font-primary">
-                    {tour?.tourCountries?.map((i) => i.label)?.join(", ")}
+                    {tour?.tourCountries?.map((i) => i.label)?.join(" - ")}
                   </span>
                 </div>
               </li>
               <li className="py-2">
-                <div className="grid items-center ">
-                  <span>رمز الرحلة</span>
-                  <span>
-                    <span className="text-primary">{tour.code}</span>
+                <div className="grid items-center w-fit">
+                  <span>السعر</span>
+                  <span className="text-primary  font-medium">
+                    {tour.price}
+                    <span className="text-base text-neutral-700 truncate">
+                      {" "}
+                      / للشخص في الغرفة الثنائية{" "}
+                    </span>
+                  </span>
+                </div>
+              </li>
+              <li className="py-2">
+                <div className="grid items-center w-fit">
+                  <span>السعر</span>
+                  <span className="text-primary  font-medium">
+                    {tour.pricePerSingle}
+                    <span className="text-base text-neutral-700 truncate">
+                      {" "}
+                      / للشخص في الغرفة المفردة{" "}
+                    </span>
                   </span>
                 </div>
               </li>
@@ -110,6 +115,25 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                     <span className="text-primary">
                       {tour.numberOfDays} أيام
                     </span>
+                  </span>
+                </div>
+              </li>
+              <li className="py-2">
+                <div className="grid items-center ">
+                  <span>تاريخ الرحلة</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-primary">
+                      أيام {tour.startDay} أسبوعياً
+                    </span>
+                    <DatesData tour={tour} />
+                  </div>
+                </div>
+              </li>
+              <li className="py-2">
+                <div className="grid items-center ">
+                  <span>رمز الرحلة</span>
+                  <span>
+                    <span className="text-primary">{tour.code}</span>
                   </span>
                 </div>
               </li>
@@ -173,14 +197,23 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
           <ul className="flex flex-col gap-4 mb-10">
             {tour?.tourIncludes?.map((i) => (
               <li key={i.id}>
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-green-500">
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-green-700">
                     <i className="las la-check text-lg text-white"></i>
                   </div>
                   <div className="grid items-start">
                     <span className="font-bold">{i.title}</span>
                     <span className="inline-block font-primary ">
-                      {i.details}
+                      <div className="grid items-center flex-wrap">
+                        {i.details.split(",").map((i) => (
+                          <div className="flex items-center">
+                            <div>
+                              <Dot className="text-green-900 w-6 h-6" />
+                            </div>
+                            <div>{i}</div>
+                          </div>
+                        ))}
+                      </div>
                     </span>
                   </div>
                 </div>
@@ -199,6 +232,24 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
                     <i className="las la-times text-xl text-white"></i>
                   </div>
                   <span className="inline-block font-primary">{details}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="p-3 sm:p-4 lg:p-6 bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10">
+          <h4 className="mb-0 text-2xl font-semibold font-primary">
+            أسماء الفنادق المتوقعة
+          </h4>
+          <div className="border border-dashed my-5"></div>
+          <ul className="flex flex-col gap-4 mb-10">
+            {tour?.hotels?.split(",").map((i) => (
+              <li key={i}>
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-primary">
+                    <Hotel className="p-1 text-white" />
+                  </div>
+                  <span className="inline-block font-primary">{i}</span>
                 </div>
               </li>
             ))}
