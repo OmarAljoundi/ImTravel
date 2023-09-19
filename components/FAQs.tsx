@@ -29,7 +29,7 @@ const Faqs = () => {
           value={String(item)}
         >
           {content?.faqs?.qas.map((i, index) => (
-            <AccordionItem value={String(index)}>
+            <AccordionItem value={String(index)} key={index}>
               <AccordionTrigger>
                 <button className="flex items-center focus:outline-none">
                   {String(index) === String(index) && (
