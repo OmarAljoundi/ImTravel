@@ -2,7 +2,12 @@ export const revalidate = 0;
 
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { getSiteData, getSitesData, getTourBySlug } from "@/lib/fetchers";
+import {
+  getContentData,
+  getSiteData,
+  getSitesData,
+  getTourBySlug,
+} from "@/lib/fetchers";
 import { LayoutProviders } from "@/components/Providers/LayoutProviders";
 import DomainLayout from "@/components/Providers/DomainProvider";
 import { Metadata } from "next";
@@ -55,12 +60,13 @@ export default async function SiteLayout({
 }) {
   const { domain } = params;
   const data = await getSiteData(domain);
+  const siteContent = await getContentData();
   if (!data) {
     notFound();
   }
 
   return (
-    <LayoutProviders office={data}>
+    <LayoutProviders office={data} content={siteContent?.content}>
       <DomainLayout>{children}</DomainLayout>
     </LayoutProviders>
   );

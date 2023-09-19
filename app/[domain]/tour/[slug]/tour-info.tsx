@@ -9,7 +9,18 @@ import { Button } from "@/components/ui/button";
 import { generate } from "./pdf-document";
 import { useDomainStore } from "@/hooks/useDomain";
 import DatesData from "./dates-data";
-import { Dot, Hotel } from "lucide-react";
+import {
+  BedDouble,
+  BedSingle,
+  CalendarDays,
+  Clock7,
+  Dot,
+  Hotel,
+  MapPin,
+  QrCode,
+} from "lucide-react";
+import Share from "./share";
+import { Badge } from "@/components/ui/badge";
 
 const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
   const office = useDomainStore((x) => x.office);
@@ -27,7 +38,7 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
           </Button>
         </div>
         <div className="grid lg:grid-cols-2 grid-cols-1 relative gap-4">
-          <div className="bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10 relative">
+          <div className="bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 relative">
             <BlurImage
               alt={tour.name || ""}
               src={tour.imageUrl || ""}
@@ -35,109 +46,99 @@ const TourInfo: FC<{ tour: ITour }> = ({ tour }) => {
               height={427}
               className="rounded-2xl block mb-3 p-3"
             />
+            <Share />
           </div>
-          <div className="px-3 sm:px-4 lg:px-6 py-6 lg:py-16  bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10">
-            <div className="flex items-center justify-between flex-wrap gap-3 mb-8">
-              <ul className="flex gap-3 items-center">
-                <li>
-                  <Link
-                    href="#"
-                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary text-white"
-                  >
-                    <i className="lab text-xl la-facebook-f"></i>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary text-white"
-                  >
-                    <i className="lab text-xl la-twitter"></i>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary text-white"
-                  >
-                    <i className="lab text-xl la-instagram"></i>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="link w-8 h-8 grid place-content-center bg-[var(--primary-light)] text-primary rounded-full hover:bg-primary text-white"
-                  >
-                    <i className="lab text-xl la-linkedin-in"></i>
-                  </Link>
-                </li>
-              </ul>
-              <h2 className="h2 m-0 font-primary"></h2>
+          <div className="px-3 sm:px-4 lg:px-6 py-6  bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 ">
+            <h1 className="text-3xl text-center">الأسعار</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 justify-between mt-5">
+              <div className="shadow-lg p-5 border rounded-lg">
+                <div className="grid items-center justify-items-center">
+                  <div className="bg-primary p-2 rounded-full">
+                    <BedSingle className=" text-white " />
+                  </div>
+                  <h4 className="mt-2  text-base sm:text-sm md:text-base">
+                    الشخض في الغرفة المزدوجة
+                  </h4>
+                  <h2 className="text-xl font-bold">{tour.price}</h2>
+                </div>
+              </div>
+              <div className="shadow-lg p-5 border rounded-lg">
+                <div className="grid items-center justify-items-center ">
+                  <div className="bg-primary p-2 rounded-full">
+                    <BedDouble className=" text-white " />
+                  </div>
+                  <h4 className="mt-2 text-base sm:text-sm md:text-base">
+                    الشخض في الغرفة المفردة
+                  </h4>
+                  <h2 className="text-xl font-bold">{tour.pricePerSingle}</h2>
+                </div>
+              </div>
             </div>
-            <ul className="grid grid-cols-1 xl:grid-cols-2   border-t border-dashed gap-md-0 divide-y divide-dashed font-primary">
-              <li className="py-2">
-                <div className="grid items-center ">
-                  <span>الدول</span>
-                  <span className="text-primary font-primary">
-                    {tour?.tourCountries?.map((i) => i.label)?.join(" - ")}
-                  </span>
-                </div>
-              </li>
-              <li className="py-2">
-                <div className="grid items-center w-fit">
-                  <span>السعر</span>
-                  <span className="text-primary  font-medium">
-                    {tour.price}
-                    <span className="text-base text-neutral-700 truncate">
-                      {" "}
-                      / للشخص في الغرفة الثنائية{" "}
+            <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-x-8  border-t border-dashed mt-4  gap-md-0 divide-y divide-dashed font-primary">
+              <div className="py-2 col-span-2">
+                <div className="flex items-center gap-4 ">
+                  <div className="bg-primary p-2 rounded-full">
+                    <MapPin className=" text-white " />
+                  </div>
+                  <div className="grid items-center ">
+                    <span>الدول</span>
+                    <span className="text-primary font-primary">
+                      {tour?.tourCountries?.map((i) => i.label)?.join(" - ")}
                     </span>
-                  </span>
-                </div>
-              </li>
-              <li className="py-2">
-                <div className="grid items-center w-fit">
-                  <span>السعر</span>
-                  <span className="text-primary  font-medium">
-                    {tour.pricePerSingle}
-                    <span className="text-base text-neutral-700 truncate">
-                      {" "}
-                      / للشخص في الغرفة المفردة{" "}
-                    </span>
-                  </span>
-                </div>
-              </li>
-
-              <li className="py-2">
-                <div className="grid items-center ">
-                  <span>المدة</span>
-                  <span>
-                    <span className="text-primary">
-                      {tour.numberOfDays} أيام
-                    </span>
-                  </span>
-                </div>
-              </li>
-              <li className="py-2">
-                <div className="grid items-center ">
-                  <span>تاريخ الرحلة</span>
-                  <div className="flex justify-between items-center">
-                    <span className="text-primary">
-                      أيام {tour.startDay} أسبوعياً
-                    </span>
-                    <DatesData tour={tour} />
                   </div>
                 </div>
-              </li>
-              <li className="py-2">
-                <div className="grid items-center ">
-                  <span>رمز الرحلة</span>
-                  <span>
-                    <span className="text-primary">{tour.code}</span>
-                  </span>
+              </div>
+
+              <div className="py-2 col-span-2">
+                <div className="flex items-center gap-4 ">
+                  <div className="bg-primary p-2 rounded-full">
+                    <Clock7 className=" text-white " />
+                  </div>
+                  <div className="grid items-center w-fit">
+                    <span>المدة</span>
+                    <span>
+                      <span className="text-primary">
+                        {tour.numberOfDays} أيام
+                      </span>
+                    </span>
+                  </div>
                 </div>
-              </li>
-            </ul>
+              </div>
+              <div className="py-2 col-span-2">
+                <div className="flex justify-between items-end">
+                  <div className="flex items-center gap-4 ">
+                    <div className="bg-primary p-2 rounded-full">
+                      <CalendarDays className=" text-white " />
+                    </div>
+                    <div className="grid items-center ">
+                      <span>تاريخ الرحلة</span>
+                      <div
+                        className="flex justify-between
+                     items-center gap-4"
+                      >
+                        <span className="text-primary">
+                          أيام {tour.startDay} أسبوعياً
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <DatesData tour={tour} />
+                </div>
+              </div>
+              <div className="py-2 col-span-2">
+                <div className="flex items-center gap-4 ">
+                  <div className="bg-primary p-2 rounded-full">
+                    <QrCode className=" text-white " />
+                  </div>
+                  <div className="grid items-center ">
+                    <span>رمز الرحلة</span>
+                    <span>
+                      <span className="text-primary">{tour.code}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -1,6 +1,10 @@
 export const revalidate = 0;
 import { IOfficeResponse } from "@/interface/IOfficeResponse";
-import { ILocationResponse, ITourResponse } from "@/interface/Response";
+import {
+  IContentResponse,
+  ILocationResponse,
+  ITourResponse,
+} from "@/interface/Response";
 import { Order, SearchQuery, eFilterOperator } from "@/interface/Search";
 import { http } from "@/service/httpService";
 import { daysFilter } from "./utils";
@@ -130,5 +134,10 @@ export async function getDestination() {
   });
 
   const result = await http<ILocationResponse>("/Location/Search").post(_SQ);
+  return result;
+}
+
+export async function getContentData() {
+  const result = await http<IContentResponse>("/Content/Read").get();
   return result;
 }

@@ -16,7 +16,13 @@ const DatesData: FC<{ tour: ITour }> = ({ tour }) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button size={"sm"} className={cn(!open ? "bg-primary" : "opacity-60")}>
+        <Button
+          size={"sm"}
+          className={cn(
+            !open ? "bg-primary" : "opacity-60",
+            "text-xs sm:text-sm"
+          )}
+        >
           {!open ? "عرض التواريخ" : "إخفاء التواريخ"}
         </Button>
       </PopoverTrigger>
@@ -25,7 +31,7 @@ const DatesData: FC<{ tour: ITour }> = ({ tour }) => {
           {tour.tourPricing?.map((item, index) => (
             <Button
               size={"sm"}
-              className={cn("text-sm", office?.primaryFont)}
+              className={cn("text-xs sm:text-sm", office?.primaryFont)}
               key={index}
             >
               {format(new Date(item.tourDate!), "PPP", { locale: ar })}

@@ -3,6 +3,7 @@ export const revalidate = 0;
 import Hero from "@/components/Hero";
 import Property from "@/components/Property";
 import Destinations from "@/components/Destinations";
+import Faqs from "@/components/FAQs";
 
 export default async function SiteHomePage() {
   return (
@@ -10,6 +11,7 @@ export default async function SiteHomePage() {
       <Hero />
       <Destinations />
       <Property />
+      <Faqs />
       {/* <WhyChoose /> */}
       {/* <TravelMemory /> */}
     </>
