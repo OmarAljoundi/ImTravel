@@ -1,29 +1,11 @@
-export const revalidate = 0;
+export const revalidate = 3600;
 
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import {
-  getContentData,
-  getSiteData,
-  getSitesData,
-  getTourBySlug,
-} from "@/lib/fetchers";
+import { getContentData, getSiteData } from "@/lib/fetchers";
 import { LayoutProviders } from "@/components/Providers/LayoutProviders";
 import DomainLayout from "@/components/Providers/DomainProvider";
 import { Metadata } from "next";
-
-// export async function generateStaticParams() {
-//   const sites = await getSitesData();
-//   const allPaths = [...sites.map(({ slug }) => slug)].filter(
-//     (path) => path
-//   ) as Array<string>;
-
-//   return allPaths.map((domain) => ({
-//     params: {
-//       domain,
-//     },
-//   }));
-// }
 
 export async function generateMetadata({
   params,
