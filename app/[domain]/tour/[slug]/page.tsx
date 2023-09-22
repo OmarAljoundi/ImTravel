@@ -1,10 +1,7 @@
 import { notFound } from "next/navigation";
-import Form from "./form";
 import TourInfo from "./tour-info";
 import { getTourBySlug } from "@/lib/fetchers";
-import BlurImage from "@/components/BlurImage";
 import Breadcrumb from "@/components/Breadcrumb";
-export const revalidate = 0;
 type Params = {
   params: {
     slug: string;

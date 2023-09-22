@@ -1,5 +1,3 @@
-export const revalidate = 3600;
-
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { getContentData, getSiteData } from "@/lib/fetchers";

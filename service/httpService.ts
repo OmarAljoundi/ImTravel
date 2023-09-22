@@ -2,7 +2,8 @@ const onRequest = async <T>(
   endPoint: string,
   method: "POST" | "GET" | "PUT" | "DELETE",
   data: any = "",
-  token?: string
+  token?: string,
+  tag?: string
 ): Promise<T> => {
   var headers = new Headers();
   headers.append("Accept", "application/json");
@@ -11,12 +12,14 @@ const onRequest = async <T>(
   if (token) {
     headers.append("Authorization", `Bearer ${token}`);
   }
+  console.log("tag", tag);
 
   const requestOptions: RequestInit = {
     method,
     headers,
     next: {
       revalidate: 3600,
+      tags: [tag ?? ""],
     },
   };
 
@@ -42,14 +45,15 @@ const onRequest = async <T>(
   }
 };
 
-export function http<T>(endPoint: string) {
+export function http<T>(endPoint: string, tag?: string) {
   return {
     post: (data: any = "", token?: string) =>
-      onRequest<T>(endPoint, "POST", data, token),
-    get: (token?: string) => onRequest<T>(endPoint, "GET", undefined, token),
+      onRequest<T>(endPoint, "POST", data, token, tag),
+    get: (token?: string) =>
+      onRequest<T>(endPoint, "GET", undefined, token, tag),
     delete: (token?: string) =>
-      onRequest<T>(endPoint, "DELETE", undefined, token),
+      onRequest<T>(endPoint, "DELETE", undefined, token, tag),
     update: (data: any = "", token?: string) =>
-      onRequest<T>(endPoint, "PUT", data, token),
+      onRequest<T>(endPoint, "PUT", data, token, tag),
   };
 }

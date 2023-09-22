@@ -16,7 +16,8 @@ export async function getSiteData(domain: string) {
 
   if (subdomain == null || subdomain.includes("www")) return undefined;
   var response = await http<IOfficeResponse>(
-    `/Office/Search?slug=${subdomain}`
+    `/Office/Search?slug=${subdomain}`,
+    subdomain
   ).get();
 
   return response.office.status == true ? response.office : undefined;
@@ -114,7 +115,7 @@ export async function getTourBySlug(slug: string) {
     FilterOperator: eFilterOperator.EqualsTo,
     MemberName: "Name",
   });
-  const result = await http<ITourResponse>("/Tour/Search").post(_SQ);
+  const result = await http<ITourResponse>("/Tour/Search", slug).post(_SQ);
 
   return result;
 }
