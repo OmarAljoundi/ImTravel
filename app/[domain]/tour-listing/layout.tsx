@@ -34,7 +34,7 @@ export default function RootLayout({
           url: "/tour-listing",
         },
         {
-          label: decodeURIComponent(destination).replaceAll("-", " "),
+          label: decodeURIComponent(destination as string).replaceAll("-", " "),
         },
       ]);
     }
