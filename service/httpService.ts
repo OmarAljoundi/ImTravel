@@ -16,7 +16,7 @@ const onRequest = async <T>(
     method,
     headers,
     next: {
-      revalidate: 0,
+      revalidate: 3600,
     },
   };
 
