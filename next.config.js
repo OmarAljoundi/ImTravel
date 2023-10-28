@@ -15,6 +15,7 @@ const nextConfig = {
       "flagcdn.com",
       "placehold.co",
       "localhost",
+      "cdlxkuzvjlyvwgzgcdro.supabase.co",
     ],
   },
 };

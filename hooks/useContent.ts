@@ -1,10 +1,9 @@
-import { IContent } from "@/interface/Content";
-import { IOffice } from "@/interface/Office";
+import { Setting } from "@/types/custom";
 import { create } from "zustand";
 
 interface ContentState {
-  content: IContent | undefined;
-  setContent: (content: IContent) => void;
+  content: Setting | undefined;
+  setContent: (content?: Setting) => void;
   discardContent: () => void;
 }
 

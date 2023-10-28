@@ -2,25 +2,17 @@ const onRequest = async <T>(
   endPoint: string,
   method: "POST" | "GET" | "PUT" | "DELETE",
   data: any = "",
-  token?: string,
-  tag?: string
+  next?: NextFetchRequestConfig,
+  isClient?: boolean
 ): Promise<T> => {
   var headers = new Headers();
   headers.append("Accept", "application/json");
   headers.append("Content-Type", "application/json");
 
-  if (token) {
-    headers.append("Authorization", `Bearer ${token}`);
-  }
-  console.log("tag", tag);
-
   const requestOptions: RequestInit = {
     method,
     headers,
-    next: {
-      revalidate: 3600,
-      tags: [tag ?? ""],
-    },
+    next,
   };
 
   if (method === "POST" || method === "PUT") {
@@ -28,10 +20,10 @@ const onRequest = async <T>(
   }
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}${endPoint}`,
-      requestOptions
-    );
+    const url = isClient
+      ? endPoint
+      : `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN}${endPoint}`;
+    const response = await fetch(url, requestOptions);
 
     if (!response.ok) {
       throw new Error(`Request failed with status: ${response.status}`);
@@ -45,15 +37,17 @@ const onRequest = async <T>(
   }
 };
 
-export function http<T>(endPoint: string, tag?: string) {
+export function http<T>(
+  endPoint: string,
+  next?: NextFetchRequestConfig,
+  isClient?: boolean
+) {
   return {
-    post: (data: any = "", token?: string) =>
-      onRequest<T>(endPoint, "POST", data, token, tag),
-    get: (token?: string) =>
-      onRequest<T>(endPoint, "GET", undefined, token, tag),
-    delete: (token?: string) =>
-      onRequest<T>(endPoint, "DELETE", undefined, token, tag),
-    update: (data: any = "", token?: string) =>
-      onRequest<T>(endPoint, "PUT", data, token, tag),
+    post: (data: any = "") =>
+      onRequest<T>(endPoint, "POST", data, next, isClient),
+    update: (data: any = "") =>
+      onRequest<T>(endPoint, "PUT", data, next, isClient),
+    get: () => onRequest<T>(endPoint, "GET", undefined, next, isClient),
+    delete: () => onRequest<T>(endPoint, "DELETE", undefined, next, isClient),
   };
 }

@@ -1,7 +1,5 @@
-import { useDomainStore } from "@/hooks/useDomain";
 import { IOffice } from "@/interface/Office";
-import { ITour } from "@/interface/Tour";
-import { rejects } from "assert";
+import { Office, Tour } from "@/types/custom";
 import {
   Paragraph,
   Document,
@@ -9,22 +7,19 @@ import {
   TextRun,
   AlignmentType,
   HeadingLevel,
-  SectionType,
-  BorderStyle,
   ImageRun,
   PageBorderDisplay,
   PageBorderOffsetFrom,
   PageBorderZOrder,
   NumberFormat,
   PageNumberSeparator,
-  PageTextDirectionType,
 } from "docx";
 import { saveAs } from "file-saver";
-export const generate = async (tour: ITour, office: IOffice) => {
+export const generate = async (tour: Tour, office: Office) => {
   const createStories = (): Paragraph[] => {
     var p: Paragraph[] = [];
     p.push(createSubHeading("يوميات البرنامج"));
-    tour.tourSections?.map((i) => {
+    tour.tour_sections?.map((i) => {
       p.push(
         new Paragraph({
           alignment: AlignmentType.RIGHT,
@@ -66,7 +61,7 @@ export const generate = async (tour: ITour, office: IOffice) => {
           text: text,
           bold: true,
           size: 42,
-          color: office.primaryColor,
+          color: office.primary_color,
           font: {
             name: "Segoe UI Semilight",
           },
@@ -87,7 +82,7 @@ export const generate = async (tour: ITour, office: IOffice) => {
         new TextRun({
           text,
           bold: true,
-          color: office?.primaryColor,
+          color: office?.primary_color,
           size: 48,
           font: {
             name: "Segoe UI Semilight",
@@ -136,16 +131,16 @@ export const generate = async (tour: ITour, office: IOffice) => {
   const createTourIncludes = (): Paragraph[] => {
     var p: Paragraph[] = [];
     p.push(createSubHeading("ما يشمله البرنامج"));
-    tour.tourIncludes?.map((i) => {
-      p.push(createBullet(i.title, i.details.replaceAll(",", " ، ")));
+    tour.tour_includes?.map((i) => {
+      p.push(createBullet(i.title, i.description.replaceAll(",", " ، ")));
     });
     return p;
   };
   const createTourExcludes = (): Paragraph[] => {
     var p: Paragraph[] = [];
     p.push(createSubHeading("ما لا يشمله البرنامج"));
-    tour.tourExcludes?.map((i) => {
-      p.push(createBullet(i.title, i.details.replaceAll(",", " ، ")));
+    tour.tour_excludes?.map((i) => {
+      p.push(createBullet(i.title, i.description.replaceAll(",", " ، ")));
     });
     return p;
   };
@@ -161,11 +156,11 @@ export const generate = async (tour: ITour, office: IOffice) => {
       },
       style: "Intense Quote",
       shading: {
-        fill: office.primaryColor,
+        fill: office.primary_color,
       },
       children: [
         new TextRun({
-          text: `مدة الرحلة: ${tour.numberOfDays}`,
+          text: `مدة الرحلة: ${tour.number_of_days}`,
           font: {
             name: "Segoe UI Semilight",
           },
@@ -178,9 +173,7 @@ export const generate = async (tour: ITour, office: IOffice) => {
           },
         }),
         new TextRun({
-          text: ` - الدول: ${tour.tourCountries
-            ?.map((x) => x.label)
-            .join(" ، ")}`,
+          text: ` - الدول: ${tour.tour_countries?.join(" ، ")}`,
           font: {
             name: "Segoe UI Semilight",
           },
@@ -208,7 +201,7 @@ export const generate = async (tour: ITour, office: IOffice) => {
           },
         }),
         new TextRun({
-          text: ` - أيام الرحلة: ${tour.startDay?.replaceAll(",", " ، ")}`,
+          text: ` - أيام الرحلة: ${tour.start_day?.join(" ، ")}`,
           font: {
             name: "Segoe UI Semilight",
           },
@@ -289,7 +282,7 @@ export const generate = async (tour: ITour, office: IOffice) => {
   const createHotelInfo = (): Paragraph[] => {
     var p: Paragraph[] = [];
     p.push(createSubHeading("الفنادق"));
-    tour.hotels?.split(",")?.map((i) => {
+    tour.tour_hotels?.map((i) => {
       p.push(
         new Paragraph({
           alignment: AlignmentType.LEFT,

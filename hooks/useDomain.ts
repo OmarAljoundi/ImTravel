@@ -1,9 +1,10 @@
 import { IOffice } from "@/interface/Office";
+import { Office } from "@/types/custom";
 import { create } from "zustand";
 
 interface OfficeState {
-  office: IOffice | undefined;
-  setOffice: (office: IOffice) => void;
+  office: Office | undefined;
+  setOffice: (office: Office) => void;
   discardOffice: () => void;
 }
 

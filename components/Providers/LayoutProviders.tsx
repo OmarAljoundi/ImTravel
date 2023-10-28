@@ -1,11 +1,10 @@
 "use client";
-import Footer from "@/components/Footer";
-import HeaderTop from "@/components/HeaderTop";
-import { useContentStore } from "@/hooks/useContent";
 import { useDomainStore } from "@/hooks/useDomain";
-import { IContent } from "@/interface/Content";
-import { IOffice } from "@/interface/Office";
 import { useEffect, useState } from "react";
+import HeaderTop from "../layout/ThemeOne/header-top";
+import Footer from "../layout/ThemeOne/footer";
+import { Office, Setting } from "@/types/custom";
+import { useContentStore } from "@/hooks/useContent";
 
 export function LayoutProviders({
   children,
@@ -13,8 +12,8 @@ export function LayoutProviders({
   content,
 }: {
   children: React.ReactNode;
-  office: IOffice;
-  content: IContent;
+  office: Office;
+  content?: Setting;
 }) {
   const setOffce = useDomainStore((state) => state.setOffice);
   setOffce(office);
@@ -41,7 +40,6 @@ export function LayoutProviders({
   return (
     <div>
       <HeaderTop />
-
       {children}
       <Footer />
     </div>

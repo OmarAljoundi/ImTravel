@@ -11,19 +11,21 @@ export default function DomainLayout({ children }: DomainLayout) {
   const office = useDomainStore((s) => s.office);
 
   return (
-    <div className={office?.primaryFont}>
+    <div className={office?.primary_font}>
       {children}
       <style jsx global>
         {`
           @layer base {
             :root {
-              --primary: ${hexToHSLString(office!.primaryColor)};
-              --secondary: ${hexToHSLString(office!.secondaryColor)};
-              --tertiary: ${hexToHSLString(office!.thirdColor)};
-              --bg-1: ${hexToHSLString(office!.bgPrimaryColor)};
-              --bg-2: ${hexToHSLString(office!.bgSecondaryColor)};
-              --primary-light: ${hexToHSLString(office!.primaryColor, 0.3)};
-              --secondary-light: ${hexToHSLString(office!.secondaryColor, 0.3)};
+              --primary: ${hexToHSLString(office!.primary_color)};
+              --secondary: ${hexToHSLString(office!.secondary_color)};
+              --bg-1: ${hexToHSLString(office!.bg_primary_color)};
+              --bg-2: ${hexToHSLString(office!.bg_secondary_color)};
+              --primary-light: ${hexToHSLString(office!.primary_color, 0.3)};
+              --secondary-light: ${hexToHSLString(
+                office!.secondary_color,
+                0.3
+              )};
             }
           }
         `}
@@ -31,3 +33,5 @@ export default function DomainLayout({ children }: DomainLayout) {
     </div>
   );
 }
+
+// --tertiary: ${hexToHSLString(office!.third_color)};

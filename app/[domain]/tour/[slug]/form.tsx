@@ -1,5 +1,4 @@
 "use client";
-import BlurImage from "@/components/BlurImage";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,26 +10,25 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { useDomainStore } from "@/hooks/useDomain";
-import { ITour } from "@/interface/Tour";
 import { cn } from "@/lib/utils";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { Tour } from "@/types/custom";
 import { FC } from "react";
 
-const Form: FC<{ tour: ITour }> = ({ tour }) => {
+const Form: FC<{ tour: Tour }> = ({ tour }) => {
   const office = useDomainStore((x) => x.office);
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button className="w-full md:w-fit">طريقة الحجز</Button>
       </DialogTrigger>
-      <DialogContent className={cn("sm:max-w-[425px]", office?.primaryFont)}>
+      <DialogContent className={cn("sm:max-w-[425px]", office?.primary_font)}>
         <DialogHeader>
           <DialogTitle>معلومات التواصل</DialogTitle>
           <DialogDescription>
             أترك معلوماتك لكي يتم التواصل معك من قبل مختصين الرحلات
           </DialogDescription>
         </DialogHeader>
-        <div className={cn("pb-0 mb-6 relative", office?.primaryFont)}>
+        <div className={cn("pb-0 mb-6 relative", office?.primary_font)}>
           <div className="bg-white rounded-2xl p-3 sm:p-4 lg:py-8 lg:px-6">
             <form className="flex flex-col gap-5 mb-4">
               <input
@@ -58,10 +56,10 @@ const Form: FC<{ tour: ITour }> = ({ tour }) => {
               أو التواصل مباشرة مع هذا الرقم
             </span>
             <a
-              href={`tel:${office?.contactNumber}`}
+              href={`tel:${office?.contact_number}`}
               className="text-primary underline mr-4"
             >
-              {office?.contactNumber}
+              {office?.contact_number}
             </a>
           </div>
         </div>

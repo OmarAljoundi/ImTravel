@@ -1,1 +1,0 @@
-export const touramenities = ["Wifi", "Gymnesium", "Mountain Bike", "Satellite Office", "Staff Lounge", "Golf Cages", "Aerobics Room", "Swimming Pool"]

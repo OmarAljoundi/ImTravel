@@ -67,12 +67,11 @@
   }
 }
 
-
-// 
-.react-player__preview{
+//
+.react-player__preview {
   border-radius: 16px;
 }
-iframe{
+iframe {
   border-radius: 16px;
 }
 
@@ -87,69 +86,67 @@ iframe{
   left: 0;
 }
 
-
 // range slider
 
-  #range {
-    position: relative;
-    width: 100%;
-    height: 10px;
-    border-radius: 15px;
-    background: #E0E3E6;
-  }
-  #range .range-slider__range {
-    background-color: var(--primary);
-  }
-  #range .range-slider__thumb {
-    pointer-events: auto;
-    -webkit-appearance: none;
-    appearance: none;
-    width: 0.5rem;
-    height: 1.25rem;
-    background: white;
-    border: 1px solid #E0E3E6;
-    border-radius: 1rem;
-    opacity: 1;
-    cursor: e-resize;
-  }
+#range {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  border-radius: 15px;
+  background: #e0e3e6;
+}
+#range .range-slider__range {
+  background-color: var(--primary);
+}
+#range .range-slider__thumb {
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0.5rem;
+  height: 1.25rem;
+  background: white;
+  border: 1px solid #e0e3e6;
+  border-radius: 1rem;
+  opacity: 1;
+  cursor: e-resize;
+}
 
-  
-      .scrollbarthin::-webkit-scrollbar {
-        width: 4px;
-        height: 10px;
-      }
-    
-      .scrollbarthin::-webkit-scrollbar-track {
-        border-radius: 100vh;
-        background: var(--primary-light);
-      }
-    
-     .scrollbarthin::-webkit-scrollbar-thumb {
-        background: #5c5ef3;
-        border-radius: 100vh;      
-      }
-    
-      .scrollbarthin::-webkit-scrollbar-thumb:hover {
-        background:var(--primary);
-      }
-.fc-daygrid-day-top{
+.scrollbarthin::-webkit-scrollbar {
+  width: 4px;
+  height: 10px;
+}
+
+.scrollbarthin::-webkit-scrollbar-track {
+  border-radius: 100vh;
+  background: var(--primary-light);
+}
+
+.scrollbarthin::-webkit-scrollbar-thumb {
+  background: #5c5ef3;
+  border-radius: 100vh;
+}
+
+.scrollbarthin::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+.fc-daygrid-day-top {
   justify-content: center;
 }
- .fc-toolbar-title{
+.fc-toolbar-title {
   font-weight: 600;
   font-size: 32px;
- }     
- .fc-daygrid-day-events{
+}
+.fc-daygrid-day-events {
   display: none;
- }
- .fc-daygrid-day-bg{
+}
+.fc-daygrid-day-bg {
   display: none;
- }
- .fc-header-toolbar{
+}
+.fc-header-toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
- }
+}
 // .fc-scroller{
 //   overflow: visible !important;
 // }

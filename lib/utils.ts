@@ -1,3 +1,4 @@
+import { Tour } from "@/types/custom";
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
  
@@ -57,9 +58,67 @@ export const queryString:QueryString = {
   destination:[]
 
 }
+
+
 export const daysFilter = [
-  { label: "من 5 الى 8 ايام", value: "t1",period_min:5,period_max:8 },
-   { label: "من 9 الى 12 ايام", value: "t2",period_min:9,period_max:12  },
-    { label: "من 13 الى 24 يوم", value: "t3",period_min:13,period_max:24  },
+  { label: "من 5 إلى 8 أيام", value: "t1",period:[5,6,7,8] },
+  { label: "من 9 إلى 12 أيام", value: "t2",period:[9,10,11,12]  },
+  { label: "من 13 إلى 24 يوم", value: "t3",period:[13,14,15,16,17,18,19,20,21,22,23,24]},
  
 ]
+type TourSearch = {
+  currency:string
+  country?: string;
+  days?: string;
+  maxprice?: number | null;
+  
+
+};
+export function filterTours(prop:TourSearch, tours:Tour[]) {
+  const {
+    country,
+    days,
+    maxprice,
+currency
+  } = prop;
+
+  let filteredTours = [...tours];
+  if (country) {
+    const countriesToCheck = country.split(',');
+     filteredTours = filteredTours.filter((tour) => {
+      return countriesToCheck.some((country) => tour.tour_countries?.includes(country.trim()));
+    });
+  }
+
+  if (days) {
+    const period = daysFilter.filter((x) => days.includes(x.value));
+    var totalDays: any[] = [];
+    period.forEach((item) => {
+      totalDays = totalDays.concat(item.period);
+    });
+    filteredTours = filteredTours.filter(tour => totalDays.includes(tour.number_of_days));
+  }
+
+
+  if (maxprice) {
+    if(currency == "OMR"){
+      filteredTours = filteredTours.filter(tour => tour.price_double! < maxprice);
+    }
+    else {
+      filteredTours = filteredTours.filter(tour => tour.price_double_sa! < maxprice);
+    }
+  }
+
+  if(currency == "OMR"){
+    filteredTours.sort((a, b) => a.price_double! - b.price_double!);
+  }
+  else {
+    filteredTours.sort((a, b) => a.price_double_sa! - b.price_double_sa!);
+  }
+
+ 
+  
+
+  return filteredTours;
+}
+

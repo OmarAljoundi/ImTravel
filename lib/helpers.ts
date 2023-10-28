@@ -1,3 +1,6 @@
+import { Location } from "@/types/custom";
+import { eFilterOperator } from "@/types/search";
+
 export function hexToHSLString(
   hexColor: string,
   lightnessIncrease: number = 0
@@ -44,3 +47,87 @@ export const getPrice = (price: number): string => {
   const currecny = "ريال";
   return `${priceWord} ${price} ${currecny}`;
 };
+
+type FilterOperator =
+  | "eq"
+  | "neq"
+  | "gt"
+  | "gte"
+  | "lt"
+  | "lte"
+  | "like"
+  | "ilike"
+  | "is"
+  | "not.is"
+  | "in"
+  | "cs"
+  | "cd"
+  | "sl"
+  | "sr"
+  | "nxl"
+  | "nxr"
+  | "adj"
+  | "ov"
+  | "fts"
+  | "plfts"
+  | "phfts"
+  | "wfts";
+
+export function getEqOperator(op: eFilterOperator): FilterOperator {
+  switch (op) {
+    case eFilterOperator.BeginsWith:
+      return "not.is";
+    case eFilterOperator.Contains:
+      return "like";
+
+    case eFilterOperator.EqualsTo:
+      return "eq";
+    case eFilterOperator.EqualsToList:
+      return "in";
+
+    case eFilterOperator.GreaterThanOrEquals:
+      return "gte";
+    case eFilterOperator.GreaterThan:
+      return "gt";
+    case eFilterOperator.LessThan:
+      return "lt";
+    case eFilterOperator.LessThanOrEquals:
+      return "lte";
+
+    default:
+      return "eq";
+  }
+}
+
+export function createClientLink(domain: string, endpoint: string) {
+  return `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN_CLIENT?.replace(
+    "REPLACE_ME",
+    domain
+  )}${endpoint}`;
+}
+
+export function getToursIds(locations: Location[] | Location): number[] {
+  let ids: number[] = [];
+  if (Array.isArray(locations)) {
+    locations.map((x) => {
+      if (x.location_attributes && x.location_attributes.length > 0) {
+        ids = ids.concat(
+          x.location_attributes[0].location_tours.map((x) => x.tour_id)
+        );
+      }
+    });
+  } else {
+    if (locations) {
+      if (
+        locations.location_attributes &&
+        locations.location_attributes.length > 0
+      ) {
+        ids = ids.concat(
+          locations.location_attributes[0].location_tours.map((x) => x.tour_id)
+        );
+      }
+    }
+  }
+
+  return ids;
+}

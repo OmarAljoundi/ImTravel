@@ -1,12 +1,8 @@
 "use client";
-import { ITour } from "@/interface/Tour";
 import { FC } from "react";
-import Form from "./form";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { generate } from "./pdf-document";
 import { useDomainStore } from "@/hooks/useDomain";
-import DatesData from "./dates-data";
 import {
   BedDouble,
   BedSingle,
@@ -17,8 +13,11 @@ import {
   MapPin,
   QrCode,
 } from "lucide-react";
-import Share from "./share";
 import BlurImage from "@/components/custom/Shared/blur-image";
+import Form from "@/app/[domain]/tour/[slug]/form";
+import { generate } from "@/app/[domain]/tour/[slug]/pdf-document";
+import Share from "@/app/[domain]/tour/[slug]/share";
+import DatesData from "@/app/[domain]/tour/[slug]/dates-data";
 import { Tour } from "@/types/custom";
 
 const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
