@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { LayoutProviders } from "@/components/providers/LayoutProviders";
-import DomainLayout from "@/components/providers/DomainProvider";
+import { LayoutProviders } from "@/components/Providers/LayoutProviders";
+import DomainLayout from "@/components/Providers/DomainProvider";
 import { getContentData, getSiteData } from "@/lib/operations";
 
 export default async function SiteLayout({
