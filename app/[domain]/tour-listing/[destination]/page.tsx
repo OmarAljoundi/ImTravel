@@ -3,23 +3,23 @@ import RenderTours from "@/components/custom/Shared/render-tours";
 import Breadcrumb from "@/components/custom/ThemeOne/breadcrumb";
 import { getDestination, getSitesData } from "@/lib/operations";
 
-// export async function generateStaticParams() {
-//   const params: { destination: string; domain: string }[] = [];
-//   const responses = await Promise.all([getDestination(), getSitesData()]);
+export async function generateStaticParams() {
+  const params: { destination: string; domain: string }[] = [];
+  const responses = await Promise.all([getDestination(), getSitesData()]);
 
-//   responses[0]
-//     .filter((x) => x.is_office && x.is_active)
-//     .map((dest) => {
-//       responses[1].map((office) => {
-//         params.push({
-//           domain: office.slug,
-//           destination: dest.slug,
-//         });
-//       });
-//     });
+  responses[0]
+    .filter((x) => x.is_office && x.is_active)
+    .map((dest) => {
+      responses[1].map((office) => {
+        params.push({
+          domain: office.slug,
+          destination: dest.slug,
+        });
+      });
+    });
 
-//   return params;
-// }
+  return params;
+}
 
 const DestinationPage = async ({
   params,

@@ -12,27 +12,27 @@ type Params = {
   };
 };
 
-// export async function generateStaticParams() {
-//   const params: { slug: string; domain: string }[] = [];
-//   const responses = await Promise.all([
-//     getTours(),
-//     getDestination(),
-//     getSitesData(),
-//   ]);
-//   const tourIds = getToursIds(responses[1]);
-//   responses[0]
-//     .filter((x) => tourIds.includes(x.id))
-//     .map((tour) => {
-//       responses[2].map((office) => {
-//         params.push({
-//           domain: office.slug,
-//           slug: tour.slug,
-//         });
-//       });
-//     });
+export async function generateStaticParams() {
+  const params: { slug: string; domain: string }[] = [];
+  const responses = await Promise.all([
+    getTours(),
+    getDestination(),
+    getSitesData(),
+  ]);
+  const tourIds = getToursIds(responses[1]);
+  responses[0]
+    .filter((x) => tourIds.includes(x.id))
+    .map((tour) => {
+      responses[2].map((office) => {
+        params.push({
+          domain: office.slug,
+          slug: tour.slug,
+        });
+      });
+    });
 
-//   return params;
-// }
+  return params;
+}
 
 export async function generateMetadata({
   params,

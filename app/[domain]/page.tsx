@@ -6,19 +6,19 @@ import TourListing from "@/components/custom/ThemeOne/tours-listing";
 import { Metadata } from "next";
 import { getSiteData, getSitesData } from "@/lib/operations";
 
-// export async function generateStaticParams() {
-//   const params: { domain: string }[] = [];
-//   const responses = await getSitesData();
-//   responses
-//     .filter((x) => x.status)
-//     .map((office) => {
-//       params.push({
-//         domain: office.slug,
-//       });
-//     });
+export async function generateStaticParams() {
+  const params: { domain: string }[] = [];
+  const responses = await getSitesData();
+  responses
+    .filter((x) => x.status)
+    .map((office) => {
+      params.push({
+        domain: office.slug,
+      });
+    });
 
-//   return params;
-// }
+  return params;
+}
 
 export async function generateMetadata({
   params,
