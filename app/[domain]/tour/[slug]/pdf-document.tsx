@@ -1,4 +1,3 @@
-import { IOffice } from "@/interface/Office";
 import { Office, Tour } from "@/types/custom";
 import {
   Paragraph,
@@ -31,7 +30,7 @@ export const generate = async (tour: Tour, office: Office) => {
               rightToLeft: true,
               break: 1,
               font: {
-                name: "Segoe UI Semilight",
+                name: "Segoe UI",
               },
             }),
             new TextRun({
@@ -41,7 +40,7 @@ export const generate = async (tour: Tour, office: Office) => {
               rightToLeft: true,
               break: 2,
               font: {
-                name: "Calibri",
+                name: "Segoe UI",
               },
             }),
           ],
@@ -63,7 +62,7 @@ export const generate = async (tour: Tour, office: Office) => {
           size: 42,
           color: office.primary_color,
           font: {
-            name: "Segoe UI Semilight",
+            name: "Segoe UI",
           },
           rightToLeft: true,
           break: 2,
@@ -85,7 +84,7 @@ export const generate = async (tour: Tour, office: Office) => {
           color: office?.primary_color,
           size: 48,
           font: {
-            name: "Segoe UI Semilight",
+            name: "Segoe UI",
           },
           language: {
             value: "Arabic",
@@ -106,7 +105,7 @@ export const generate = async (tour: Tour, office: Office) => {
           rightToLeft: true,
           break: 1,
           font: {
-            name: "Segoe UI Semilight",
+            name: "Segoe UI",
           },
         }),
       ],
@@ -120,7 +119,7 @@ export const generate = async (tour: Tour, office: Office) => {
           rightToLeft: true,
           break: 2,
           font: {
-            name: "Calibri",
+            name: "Segoe UI",
           },
         })
       );
@@ -162,7 +161,7 @@ export const generate = async (tour: Tour, office: Office) => {
         new TextRun({
           text: `مدة الرحلة: ${tour.number_of_days}`,
           font: {
-            name: "Segoe UI Semilight",
+            name: "Segoe UI",
           },
           break: 0,
           color: "#ffffff",
@@ -175,7 +174,7 @@ export const generate = async (tour: Tour, office: Office) => {
         new TextRun({
           text: ` - الدول: ${tour.tour_countries?.join(" ، ")}`,
           font: {
-            name: "Segoe UI Semilight",
+            name: "Segoe UI",
           },
 
           break: 0,
@@ -189,7 +188,7 @@ export const generate = async (tour: Tour, office: Office) => {
         new TextRun({
           text: ` - رمز الرحلة: ${tour.code}`,
           font: {
-            name: "Segoe UI Semilight",
+            name: "Segoe UI",
           },
           color: "#ffffff",
           break: 0,
@@ -203,7 +202,7 @@ export const generate = async (tour: Tour, office: Office) => {
         new TextRun({
           text: ` - أيام الرحلة: ${tour.start_day?.join(" ، ")}`,
           font: {
-            name: "Segoe UI Semilight",
+            name: "Segoe UI",
           },
 
           color: "#ffffff",
@@ -257,13 +256,13 @@ export const generate = async (tour: Tour, office: Office) => {
   const createLogo = async (): Promise<Paragraph> => {
     try {
       const result = (await convertToBase64()) as string;
-
+      const extension = getImageExtension(office.logo);
       return new Paragraph({
         alignment: AlignmentType.CENTER,
         children: [
           new ImageRun({
             data: Uint8Array.from(
-              atob(result.replace("data:image/webp;base64,", "")),
+              atob(result.replace(`data:image/${extension};base64,`, "")),
               (c) => c.charCodeAt(0)
             ),
             transformation: {
@@ -342,3 +341,13 @@ export const generate = async (tour: Tour, office: Office) => {
     console.log("Document created successfully");
   });
 };
+
+function getImageExtension(url: string): string | null {
+  // Split the URL by the period (.) to isolate the last part of the URL
+  const parts = url.split(".");
+
+  // The image extension is the last part of the URL
+  const extension = parts[parts.length - 1];
+
+  return extension.toLowerCase(); // Convert to lowercase for consistency
+}

@@ -44,7 +44,7 @@ const TourCard = ({
         <div className="p-2 sm:p-4 lg:p-5">
           <div className="flex items-center gap-1 mb-4 mt-5 sm:mt-3">
             <div className="flex gap-1">
-              {tour_countries?.map((i) => (
+              {tour_countries?.slice(0, 4)?.map((i) => (
                 <span
                   className="inline-block bg-[var(--primary)] text-white px-2 py-1 text-[14px] rounded-md"
                   key={i}
@@ -52,6 +52,11 @@ const TourCard = ({
                   {i}
                 </span>
               ))}
+              {tour_countries?.length > 4 && (
+                <span className="inline-block bg-[var(--primary)] text-white px-2 py-1 text-[14px] rounded-md">
+                  {tour_countries?.length - 4} +
+                </span>
+              )}
             </div>
           </div>
           <Link
