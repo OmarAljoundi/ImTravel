@@ -27,7 +27,7 @@ const Destinations = async () => {
             ?.sort((a, b) => a?.image?.order - b?.image?.order)
             .map((location) => (
               <Link
-                href={`/tour-listing/${location.name?.replaceAll(" ", "-")}`}
+                href={`/tour-listing/${location.slug}`}
                 key={location.id}
                 className={"col-span-12 md:col-span-6 lg:col-span-4"}
               >
