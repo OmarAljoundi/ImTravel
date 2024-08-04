@@ -16,6 +16,7 @@ const nextConfig = {
       "placehold.co",
       "localhost",
       "cdlxkuzvjlyvwgzgcdro.supabase.co",
+      "skkyjvdnikftxykbddoi.supabase.co",
     ],
   },
 };

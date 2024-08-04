@@ -100,7 +100,10 @@ export function getEqOperator(op: eFilterOperator): FilterOperator {
 }
 
 export function createClientLink(domain: string, endpoint: string) {
-  return `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN_CLIENT}${endpoint}`;
+  return `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN_CLIENT?.replace(
+    "REPLACE_ME",
+    domain
+  )}${endpoint}`;
 }
 
 export function getToursIds(locations: Location[] | Location): number[] {
