@@ -30,6 +30,10 @@ const nextConfig = {
         hostname: "placehold.co",
       },
       {
+        hostname: "flagcdn.com",
+      },
+
+      {
         hostname: "skkyjvdnikftxykbddoi.supabase.co",
       },
       {
