@@ -1,10 +1,8 @@
 "use client";
 import { Fragment, useState, useEffect, FC } from "react";
 import { CheckIcon, PlusCircleIcon } from "@heroicons/react/20/solid";
-import { QueryString, cn, europeanCountries, queryString } from "@/lib/utils";
+import { cn, europeanCountries } from "@/lib/utils";
 import Image from "next/image";
-import qs from "query-string";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDomainStore } from "@/hooks/useDomain";
 import { X } from "lucide-react";
 import {
@@ -24,63 +22,14 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
+import { useSearchParams } from "@search-params/react";
+import { config } from "@/schema";
 
-const CountryDropdown: FC<{
-  setSearch?: (search: any) => void;
-  search?: QueryString;
-  onChange: boolean;
-}> = ({ onChange, search, setSearch }) => {
+const CountryDropdown = () => {
+  const { country, setQuery } = useSearchParams({
+    route: config.home,
+  });
   const office = useDomainStore((x) => x.office);
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [selected, setSelected] = useState<
-    { countryCode: string; label: string }[]
-  >([]);
-
-  useEffect(() => {
-    const country = searchParams.get("country");
-    if (country) {
-      const labelSet = new Set(country.split(","));
-      const filteredObjects = europeanCountries.filter((obj) =>
-        labelSet.has(obj.label)
-      );
-      setSelected(filteredObjects);
-    }
-  }, []);
-
-  useEffect(() => {
-    const query = {
-      ...qs.parseUrl(window.location.href, {
-        arrayFormat: "comma",
-        decode: true,
-      }).query,
-      country: selected.map((x) => x.label),
-    };
-
-    const url = qs.stringifyUrl(
-      {
-        url: pathname,
-        query,
-      },
-      {
-        skipNull: true,
-        skipEmptyString: true,
-        arrayFormat: "comma",
-        encode: true,
-      }
-    );
-
-    if (onChange) {
-      router.push(url);
-    } else {
-      //@ts-ignore
-      setSearch({
-        ...search,
-        country: query.country,
-      });
-    }
-  }, [selected, router]);
 
   return (
     <Popover>
@@ -92,33 +41,37 @@ const CountryDropdown: FC<{
         >
           <PlusCircleIcon className="ml-2 h-4 w-4" />
           الدول
-          {selected.length > 0 && (
+          {country && country?.length > 0 && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <Badge
                 variant="secondary"
                 className="rounded-sm px-1 font-normal lg:hidden"
               >
-                {selected.length}
+                {country.length}
               </Badge>
               <div className="hidden space-x-1 lg:flex lg:gap-1">
-                {selected.length > 2 ? (
+                {country.length > 2 ? (
                   <Badge
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"
                   >
-                    {selected.length} selected
+                    {country.length} selected
                   </Badge>
                 ) : (
                   europeanCountries
-                    .filter((option) => selected.includes(option))
+                    .filter((option) => country.includes(option.label))
                     .map((option) => (
                       <Badge
                         variant="secondary"
                         key={option.label}
                         className="rounded-sm px-1 font-normal"
                         onClick={() =>
-                          setSelected([...selected.filter((x) => x != option)])
+                          setQuery({
+                            country: [
+                              ...country.filter((x) => x != option.label),
+                            ],
+                          })
                         }
                       >
                         {option.label}
@@ -145,17 +98,23 @@ const CountryDropdown: FC<{
                   <CommandItem
                     key={option.label}
                     onSelect={() => {
-                      if (selected.includes(option)) {
-                        setSelected(selected.filter((x) => x != option));
+                      if (country?.includes(option.label)) {
+                        setQuery({
+                          country: country.filter((x) => x != option.label),
+                        });
                       } else {
-                        setSelected([...selected, option]);
+                        setQuery({
+                          country: [...(country ?? []), option.label],
+                        });
                       }
                     }}
                   >
                     <CheckIcon
                       className={cn(
                         "ml-2 text-green-600 flex h-4 w-4 items-center justify-center opacity-0 transition-all duration-500",
-                        selected.includes(option) ? "opacity-100" : "opacity-0"
+                        country?.includes(option.label)
+                          ? "opacity-100"
+                          : "opacity-0"
                       )}
                     />
                     <Image
@@ -172,13 +131,17 @@ const CountryDropdown: FC<{
                 );
               })}
             </CommandGroup>
-            {selected.length > 0 && (
+            {country && country.length > 0 && (
               <>
                 <CommandSeparator />
                 <CommandGroup>
                   <CommandItem
                     className="justify-center text-center"
-                    onSelect={() => setSelected([])}
+                    onSelect={() =>
+                      setQuery({
+                        country: undefined,
+                      })
+                    }
                   >
                     Clear filters
                   </CommandItem>

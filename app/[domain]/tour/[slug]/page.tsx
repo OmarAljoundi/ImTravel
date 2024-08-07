@@ -19,11 +19,11 @@ export async function generateStaticParams() {
     getDestination(),
     getSitesData(),
   ]);
-  const tourIds = getToursIds(responses[1]);
+  const tourIds = getToursIds(responses[1] ?? []);
   responses[0]
-    .filter((x) => tourIds.includes(x.id))
+    ?.filter((x) => tourIds.includes(x.id))
     .map((tour) => {
-      responses[2].map((office) => {
+      responses[2]?.map((office) => {
         params.push({
           domain: office.slug,
           slug: tour.slug,
@@ -63,7 +63,7 @@ export async function generateMetadata({
 
 const Page = async ({ params: { slug, domain } }: Params) => {
   const response = await getTours();
-  const tour = response.find((x) => x.slug == decodeURIComponent(slug));
+  const tour = response?.find((x) => x.slug == decodeURIComponent(slug));
   if (!tour) notFound();
 
   return (

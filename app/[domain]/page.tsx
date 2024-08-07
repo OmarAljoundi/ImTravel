@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Hero from "@/components/custom/ThemeOne/hero";
 import Faqs from "@/components/custom/ThemeOne/faqs";
 import Destinations from "@/components/custom/ThemeOne/destinations";
@@ -10,7 +11,7 @@ export async function generateStaticParams() {
   const params: { domain: string }[] = [];
   const responses = await getSitesData();
   responses
-    .filter((x) => x.status)
+    ?.filter((x) => x.status)
     .map((office) => {
       params.push({
         domain: office.slug,

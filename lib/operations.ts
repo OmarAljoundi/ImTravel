@@ -1,3 +1,5 @@
+"use server";
+
 import { supabaseClient } from "./supabaseClient";
 import { http } from "@/service/httpService";
 import {
@@ -21,6 +23,8 @@ import {
 } from "@/types/custom";
 import { Order, SearchQuery } from "@/types/search";
 import { createClientLink } from "./helpers";
+import { unstable_cache } from "next/cache";
+import { GlobalSearch } from "./server-actions";
 
 export async function getSiteData(domain: string) {
   const subdomain = domain.endsWith(`.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`)
@@ -31,77 +35,87 @@ export async function getSiteData(domain: string) {
   return office && office.status == true ? office : undefined;
 }
 
-export async function getSitesData() {
-  var _SQ: SearchQuery = {
-    FilterByOptions: [],
-    OrderByOptions: [],
-    PageIndex: 0,
-    PageSize: 100,
-    Select: "*",
-    Table: "office",
-  };
-
-  var response = await http<Response<Office>>(`/api/search`, {
-    revalidate: 86400,
+export const getSitesData = unstable_cache(
+  async () => {
+    var _SQ: SearchQuery = {
+      FilterByOptions: [],
+      OrderByOptions: [],
+      PageIndex: 0,
+      PageSize: 100,
+      Select: "*",
+      Table: "office",
+    };
+    var response = await GlobalSearch<Office>(_SQ);
+    return response.results;
+  },
+  [REVALIDATE_OFFICE_LIST],
+  {
     tags: [REVALIDATE_OFFICE_LIST],
-  }).post(_SQ);
-  return response.results;
-}
-
-export async function getTourTypes(): Promise<Response<TourType>> {
-  var _SQ: SearchQuery = {
-    FilterByOptions: [],
-    OrderByOptions: [],
-    PageIndex: 0,
-    PageSize: 100,
-    Select: "*",
-    Table: "tour_type",
-  };
-  const response = await http<Response<TourType>>("/api/search", {
     revalidate: 86400,
+  }
+);
+
+export const getTourTypes = unstable_cache(
+  async () => {
+    var _SQ: SearchQuery = {
+      FilterByOptions: [],
+      OrderByOptions: [],
+      PageIndex: 0,
+      PageSize: 100,
+      Select: "*",
+      Table: "tour_type",
+    };
+    var response = await GlobalSearch<TourType>(_SQ);
+    return response.results;
+  },
+  [REVALIDATE_TOUR_TYPE],
+  {
     tags: [REVALIDATE_TOUR_TYPE],
-  }).post(_SQ);
-  return response;
-}
-
-export async function getDestination() {
-  var _SQ: SearchQuery = {
-    FilterByOptions: [],
-    OrderByOptions: [{ MemberName: "created_at", SortOrder: Order.DESC }],
-    PageIndex: 0,
-    PageSize: 1000,
-    Select: "*,location_attributes(*,location_tours(*))",
-    Table: "location",
-  };
-  const data = await http<Response<Location>>("/api/search", {
     revalidate: 86400,
+  }
+);
+
+export const getDestination = unstable_cache(
+  async () => {
+    var _SQ: SearchQuery = {
+      FilterByOptions: [],
+      OrderByOptions: [{ MemberName: "created_at", SortOrder: Order.DESC }],
+      PageIndex: 0,
+      PageSize: 1000,
+      Select: "*,location_attributes(*,location_tours(*))",
+      Table: "location",
+    };
+    var response = await GlobalSearch<Location>(_SQ);
+
+    return response.results?.filter((x) => x.is_office == true);
+  },
+  [REVALIDATE_LOCATION_LIST],
+  {
     tags: [REVALIDATE_LOCATION_LIST],
-  }).post(_SQ);
+    revalidate: 86400,
+  }
+);
 
-  return data.results?.filter((x) => x.is_office == true);
-}
+export const getTours = unstable_cache(
+  async () => {
+    var _SQ: SearchQuery = {
+      FilterByOptions: [],
+      OrderByOptions: [],
+      PageIndex: 0,
+      PageSize: 1000,
+      Select: "*,tour_type(*)",
+      Table: "tour",
+    };
+    var response = await GlobalSearch<Tour>(_SQ);
 
-export async function getTours(domain?: string) {
-  var _SQ: SearchQuery = {
-    FilterByOptions: [],
-    OrderByOptions: [],
-    PageIndex: 0,
-    PageSize: 1000,
-    Select: "*,tour_type(*)",
-    Table: "tour",
-  };
-
-  const url = domain ? createClientLink(domain, "/api/search") : "/api/search";
-  const response = await http<Response<Tour>>(
-    url,
-    {
-      revalidate: 86400,
-      tags: [REVALIDATE_TOUR_LIST],
-    },
-    !!domain
-  ).post(_SQ);
-  return response.results;
-}
+    return response.results;
+  },
+  [REVALIDATE_TOUR_LIST],
+  {
+    tags: [REVALIDATE_TOUR_LIST],
+    revalidate: 86400,
+  }
+);
 
 export const getContentData = async () => {
   const { data, error } = await supabaseClient.storage
@@ -110,7 +124,11 @@ export const getContentData = async () => {
 
   let responseData: Setting | undefined;
 
-  if (data && data.length > 0 && data.find((x) => x.name === CONFIG_PATH)) {
+  if (
+    data &&
+    data.length > 0 &&
+    data.find((x: any) => x.name === CONFIG_PATH)
+  ) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_IMAGE_URL}/${SETTING_PATH}/${CONFIG_PATH}`,
       {

@@ -2,26 +2,24 @@
 import categoryEl from "@/public/img/category-section-el.png";
 import Image from "next/image";
 import SubHeadingBtn from "./header-text";
-import { useQuery } from "react-query";
 import TourCardLoading from "./tour-card-loading";
 import FeaturedCardHome1 from "./tour-card";
 import { useDomainStore } from "@/hooks/useDomain";
 import { getTours } from "@/lib/operations";
+import { useQuery } from "@tanstack/react-query";
 
 const TourListing = () => {
   const office = useDomainStore((x) => x.office);
 
-  const { data: tours, isLoading } = useQuery(
-    ["tours"],
-    async () => await getTours(office?.slug),
-    {
-      refetchOnWindowFocus: false,
-      select: (data) => {
-        const tourIds: number[] = office?.best_tours ?? [];
-        return data.filter((x) => tourIds.includes(x.id));
-      },
-    }
-  );
+  const { data: tours, isLoading } = useQuery({
+    queryKey: ["tours"],
+    queryFn: async () => await getTours(),
+    refetchOnWindowFocus: false,
+    select: (data) => {
+      const tourIds: number[] = office?.best_tours ?? [];
+      return data?.filter((x) => tourIds.includes(x.id));
+    },
+  });
 
   return (
     <section className="bg-[var(--bg-2)] py-[20px] lg:py-[120px] relative">

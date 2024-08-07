@@ -8,9 +8,9 @@ export async function generateStaticParams() {
   const responses = await Promise.all([getDestination(), getSitesData()]);
 
   responses[0]
-    .filter((x) => x.is_office && x.is_active)
+    ?.filter((x) => x.is_office && x.is_active)
     .map((dest) => {
-      responses[1].map((office) => {
+      responses[1]?.map((office) => {
         params.push({
           domain: office.slug,
           destination: dest.slug,
@@ -27,7 +27,7 @@ const DestinationPage = async ({
   params: { destination: string };
 }) => {
   const data = await getDestination();
-  const current_dest = data.find(
+  const current_dest = data?.find(
     (x) =>
       x.is_active &&
       x.is_office &&
@@ -55,7 +55,7 @@ const DestinationPage = async ({
       <section>
         <Filter
           onChange={true}
-          destinatons={destinations.filter((x) => x.is_office)}
+          destinatons={destinations?.filter((x) => x.is_office) ?? []}
         />
       </section>
       <RenderTours destinations={current_dest} />

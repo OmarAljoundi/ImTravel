@@ -1,71 +1,17 @@
 "use client";
-import { FC, useEffect, useState } from "react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { Button } from "../../ui/button";
-import { QueryString } from "@/lib/utils";
-import qs from "query-string";
-import { usePathname, useRouter } from "next/navigation";
-import useDebounce from "@/hooks/useDebounce";
-import { useDomainStore } from "@/hooks/useDomain";
 import { CircleDollarSign } from "lucide-react";
+import { useSearchParams } from "@search-params/react";
+import { config } from "@/schema";
 
-const PriceDropdown: FC<{
-  setSearch?: (search: QueryString) => void;
-  search?: QueryString;
-  onChange: boolean;
-}> = ({ onChange, search, setSearch }) => {
-  const pathname = usePathname();
-  const office = useDomainStore((x) => x.office);
-
-  const [value, setValue] = useState<number | undefined>(() => {
-    if (typeof window !== "undefined") {
-      const query = qs.parseUrl(window.location.href, {
-        arrayFormat: "comma",
-        decode: true,
-      }).query;
-
-      if (query.maxprice) {
-        return Number(query.maxprice);
-      }
-    }
-    return undefined;
+const PriceDropdown = () => {
+  const { maxprice, setQuery } = useSearchParams({
+    route: config.home,
   });
-  const debouncedValue = useDebounce<number | undefined>(value, 750);
-  const router = useRouter();
-
-  useEffect(() => {
-    const query = {
-      ...qs.parseUrl(window.location.href, {
-        arrayFormat: "comma",
-        decode: true,
-      }).query,
-      maxprice: value,
-    };
-
-    const url = qs.stringifyUrl(
-      {
-        url: pathname,
-        query,
-      },
-      {
-        skipNull: true,
-        skipEmptyString: true,
-        arrayFormat: "comma",
-        encode: true,
-      }
-    );
-
-    if (onChange) {
-      router.push(url);
-    } else {
-      //@ts-ignore
-      setSearch({
-        ...search,
-        maxprice: query.maxprice,
-      });
-    }
-  }, [debouncedValue, router]);
+  // const debouncedValue = useDebounce<number | undefined>(maxprice, 750);
+  // const router = useRouter();
 
   return (
     <Button
@@ -80,7 +26,7 @@ const PriceDropdown: FC<{
             السعر
           </span>
           <span className="absolute top-[-14px] bg-white rounded-2xl py-1 px-5 right-4 shadow text-primary text-xs">
-            ر.ع {value}
+            ر.ع {maxprice}
           </span>
           <Slider
             handleStyle={{
@@ -90,8 +36,8 @@ const PriceDropdown: FC<{
             max={900}
             // min={office!.minPrice}
             trackStyle={{ backgroundColor: "var(--primary)" }}
-            value={value}
-            onChange={(value) => setValue(value as number)}
+            value={maxprice}
+            onChange={(value) => setQuery({ maxprice: value as number })}
           />
         </div>
       </div>
