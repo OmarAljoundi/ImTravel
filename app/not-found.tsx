@@ -1,26 +1,18 @@
-"use client";
-import Link from "next/link";
+import { Illustration, NotFound } from "@/components/not-found";
+import React, { Suspense } from "react";
 
-const error = async () => {
+export default function NotFoundPage() {
   return (
-    <div
-      className="py-[30px] lg:py-[60px] bg-[var(--bg-2)]"
-      style={{ height: "100vh" }}
-    >
-      <div className="container">
-        <div className="flex justify-center">
-          <div className="col-span-10 lg:col-span-6">
-            <div className="text-center pb-10">
-              <h2 className="mt-10 mb-5 h2"> لا يوجد عنوان لهذه الصفحة </h2>
-              <Link href="/" className="btn-primary font-semibold">
-                <span className="inline-block"> الرجوع للرئيسية </span>
-              </Link>
-            </div>
-          </div>
+    <Suspense fallback={<h1>Loading..</h1>}>
+      <div className="relative flex flex-col w-full justify-center min-h-svh bg-background p-6 md:p-10">
+        <div className="relative max-w-5xl mx-auto w-full">
+          <Illustration className="absolute inset-0 w-full h-[50vh] opacity-[0.04] dark:opacity-[0.03] text-foreground" />
+          <NotFound
+            title="Page not found"
+            description="Lost, this page is. In another system, it may be."
+          />
         </div>
       </div>
-    </div>
+    </Suspense>
   );
-};
-
-export default error;
+}

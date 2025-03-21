@@ -1,5 +1,4 @@
-import { Location } from "@/types/custom";
-import { eFilterOperator } from "@/types/search";
+import { QueryLocationSchema } from "@/schema";
 
 export function hexToHSLString(
   hexColor: string,
@@ -33,7 +32,7 @@ export function hexToHSLString(
     h /= 6;
   }
 
-  l = Math.min(1, Math.max(0, l + lightnessIncrease)); // Corrected lightness adjustment
+  l = Math.min(1, Math.max(0, l + lightnessIncrease));
 
   const hue = Math.round(h * 360);
   const saturation = Math.round(s * 100);
@@ -73,30 +72,8 @@ type FilterOperator =
   | "phfts"
   | "wfts";
 
-export function getEqOperator(op: eFilterOperator): FilterOperator {
-  switch (op) {
-    case eFilterOperator.BeginsWith:
-      return "not.is";
-    case eFilterOperator.Contains:
-      return "like";
-
-    case eFilterOperator.EqualsTo:
-      return "eq";
-    case eFilterOperator.EqualsToList:
-      return "in";
-
-    case eFilterOperator.GreaterThanOrEquals:
-      return "gte";
-    case eFilterOperator.GreaterThan:
-      return "gt";
-    case eFilterOperator.LessThan:
-      return "lt";
-    case eFilterOperator.LessThanOrEquals:
-      return "lte";
-
-    default:
-      return "eq";
-  }
+export function getEqOperator(op: any): FilterOperator {
+  return "eq";
 }
 
 export function createClientLink(domain: string, endpoint: string) {
@@ -106,28 +83,58 @@ export function createClientLink(domain: string, endpoint: string) {
   )}${endpoint}`;
 }
 
-export function getToursIds(locations: Location[] | Location): number[] {
+export function getToursIds(
+  locations: QueryLocationSchema[] | QueryLocationSchema
+): number[] {
   let ids: number[] = [];
   if (Array.isArray(locations)) {
     locations.map((x) => {
-      if (x.location_attributes && x.location_attributes.length > 0) {
+      if (x.attributes && x.attributes.length > 0) {
         ids = ids.concat(
-          x.location_attributes[0].location_tours.map((x) => x.tour_id)
+          x.attributes[0].locationTours?.map((x) => x.tourId) ?? []
         );
       }
     });
   } else {
     if (locations) {
-      if (
-        locations.location_attributes &&
-        locations.location_attributes.length > 0
-      ) {
+      if (locations.attributes && locations.attributes.length > 0) {
         ids = ids.concat(
-          locations.location_attributes[0].location_tours.map((x) => x.tour_id)
+          locations.attributes[0].locationTours?.map((x) => x.tourId) ?? []
         );
       }
     }
   }
 
   return ids;
+}
+
+export function getTotalToursSeprate(location: QueryLocationSchema) {
+  let total = 0;
+
+  location.attributes?.map((x) => {
+    total += x._count.locationTours;
+  });
+  return getWordTotalSeprate(total);
+}
+
+function getWordTotalSeprate(total: number) {
+  switch (total) {
+    case 0:
+      return { count: 0, word: "رحلة" };
+    case 1:
+      return { word: "رحلة واحدة" };
+    case 2:
+      return { word: "رحلاتين" };
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+      return { word: "رحلات", count: total };
+    default:
+      return { word: "رحلة", count: total };
+  }
 }

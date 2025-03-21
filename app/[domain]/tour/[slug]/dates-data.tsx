@@ -4,13 +4,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { FC, useState } from "react";
-import { compareAsc, format } from "date-fns";
-import { useDomainStore } from "@/hooks/useDomain";
+import { useState } from "react";
+import { format } from "date-fns";
+import { useDomainStore } from "@/hooks/use-domain";
 import { cn } from "@/lib/utils";
-import ar from "date-fns/locale/ar-SA";
-import { Tour } from "@/types/custom";
-const DatesData: FC<{ tour: Tour }> = ({ tour }) => {
+import { arSA } from "date-fns/locale/ar-SA";
+import { QueryTourSchema } from "@/schema";
+
+export function DatesData({ tour }: { tour: QueryTourSchema }) {
   const office = useDomainStore((x) => x.office);
   const [open, setOpen] = useState(false);
   return (
@@ -28,19 +29,17 @@ const DatesData: FC<{ tour: Tour }> = ({ tour }) => {
       </PopoverTrigger>
       <PopoverContent className="w-full">
         <div className="grid grid-cols-2 gap-6">
-          {tour.tour_prices?.map((item, index) => (
+          {tour.tourPrices?.map((item, index) => (
             <Button
               size={"sm"}
-              className={cn("text-xs sm:text-sm", office?.primary_font)}
+              className={cn("text-xs sm:text-sm", office?.details?.primaryFont)}
               key={index}
             >
-              {format(new Date(item.date!), "PPP", { locale: ar })}
+              {format(new Date(item.date!), "PPP", { locale: arSA })}
             </Button>
           ))}
         </div>
       </PopoverContent>
     </Popover>
   );
-};
-
-export default DatesData;
+}

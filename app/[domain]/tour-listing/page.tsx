@@ -1,11 +1,11 @@
-import Breadcrumb from "@/components/custom/ThemeOne/breadcrumb";
-import RenderTours from "@/components/custom/Shared/render-tours";
-import Filter from "@/components/custom/Shared/filter";
-import { getDestination } from "@/lib/operations";
+import Filter from "@/components/filter";
+import Breadcrumb from "@/components/layout/breadcrumb";
+import RenderTours from "@/components/render-tours";
+import { getDestinations, getTours } from "@/server/public-query.server";
 
 export default async function TourListing() {
-  const destinations = await getDestination();
-  const current_dest = destinations?.filter((x) => x.is_active && x.is_office);
+  const destinations = await getDestinations();
+  const tours = await getTours();
   const breads = [
     {
       label: "الرئيسية",
@@ -20,12 +20,9 @@ export default async function TourListing() {
     <section>
       <Breadcrumb items={breads} />
       <section>
-        <Filter
-          onChange={true}
-          destinatons={destinations?.filter((x) => x.is_office) ?? []}
-        />
+        <Filter onChange={true} destinatons={destinations?.result ?? []} />
       </section>
-      <RenderTours destinations={current_dest} />
+      <RenderTours tours={tours?.result ?? []} />
     </section>
   );
 }

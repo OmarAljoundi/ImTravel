@@ -1,4 +1,4 @@
-import { Office, Tour } from "@/types/custom";
+import { QueryOfficeSchema, QueryTourSchema } from "@/schema";
 import {
   Paragraph,
   Document,
@@ -14,11 +14,15 @@ import {
   PageNumberSeparator,
 } from "docx";
 import { saveAs } from "file-saver";
-export const generate = async (tour: Tour, office: Office) => {
+
+export const generate = async (
+  tour: QueryTourSchema,
+  office: QueryOfficeSchema
+) => {
   const createStories = (): Paragraph[] => {
     var p: Paragraph[] = [];
     p.push(createSubHeading("يوميات البرنامج"));
-    tour.tour_sections?.map((i) => {
+    tour.tourSections?.map((i) => {
       p.push(
         new Paragraph({
           alignment: AlignmentType.RIGHT,
@@ -60,7 +64,7 @@ export const generate = async (tour: Tour, office: Office) => {
           text: text,
           bold: true,
           size: 42,
-          color: office.primary_color,
+          color: office.primaryColor ?? "",
           font: {
             name: "Segoe UI",
           },
@@ -81,7 +85,7 @@ export const generate = async (tour: Tour, office: Office) => {
         new TextRun({
           text,
           bold: true,
-          color: office?.primary_color,
+          color: office?.primaryColor ?? "",
           size: 48,
           font: {
             name: "Segoe UI",
@@ -130,7 +134,7 @@ export const generate = async (tour: Tour, office: Office) => {
   const createTourIncludes = (): Paragraph[] => {
     var p: Paragraph[] = [];
     p.push(createSubHeading("ما يشمله البرنامج"));
-    tour.tour_includes?.map((i) => {
+    tour.tourIncludes?.map((i) => {
       p.push(createBullet(i.title, i.description.replaceAll(",", " ، ")));
     });
     return p;
@@ -138,7 +142,7 @@ export const generate = async (tour: Tour, office: Office) => {
   const createTourExcludes = (): Paragraph[] => {
     var p: Paragraph[] = [];
     p.push(createSubHeading("ما لا يشمله البرنامج"));
-    tour.tour_excludes?.map((i) => {
+    tour.tourExcludes?.map((i) => {
       p.push(createBullet(i.title, i.description.replaceAll(",", " ، ")));
     });
     return p;
@@ -155,11 +159,11 @@ export const generate = async (tour: Tour, office: Office) => {
       },
       style: "Intense Quote",
       shading: {
-        fill: office.primary_color,
+        fill: office.primaryColor ?? "",
       },
       children: [
         new TextRun({
-          text: `مدة الرحلة: ${tour.number_of_days}`,
+          text: `مدة الرحلة: ${tour.numberOfDays}`,
           font: {
             name: "Segoe UI",
           },
@@ -172,7 +176,7 @@ export const generate = async (tour: Tour, office: Office) => {
           },
         }),
         new TextRun({
-          text: ` - الدول: ${tour.tour_countries?.join(" ، ")}`,
+          text: ` - الدول: ${tour.tourCountries?.join(" ، ")}`,
           font: {
             name: "Segoe UI",
           },
@@ -200,7 +204,7 @@ export const generate = async (tour: Tour, office: Office) => {
           },
         }),
         new TextRun({
-          text: ` - أيام الرحلة: ${tour.start_day?.join(" ، ")}`,
+          text: ` - أيام الرحلة: ${tour.startDay?.join(" ، ")}`,
           font: {
             name: "Segoe UI",
           },
@@ -230,7 +234,7 @@ export const generate = async (tour: Tour, office: Office) => {
         }
       };
 
-      fetch(office.logo, {
+      fetch(office.logo ?? "", {
         headers: { "Cache-Control": "no-cache" },
         next: {
           revalidate: 0,
@@ -256,7 +260,7 @@ export const generate = async (tour: Tour, office: Office) => {
   const createLogo = async (): Promise<Paragraph> => {
     try {
       const result = (await convertToBase64()) as string;
-      const extension = getImageExtension(office.logo);
+      const extension = getImageExtension(office.logo ?? "");
       return new Paragraph({
         alignment: AlignmentType.CENTER,
         children: [
@@ -269,19 +273,20 @@ export const generate = async (tour: Tour, office: Office) => {
               width: 100,
               height: 100,
             },
+            type: "png",
           }),
         ],
       });
     } catch (error) {
       console.error("Error:", error);
-      throw error; // You can choose to throw or handle the error as needed
+      throw error;
     }
   };
 
   const createHotelInfo = (): Paragraph[] => {
     var p: Paragraph[] = [];
     p.push(createSubHeading("الفنادق"));
-    tour.tour_hotels?.map((i) => {
+    tour.tourHotels?.map((i) => {
       p.push(
         new Paragraph({
           alignment: AlignmentType.LEFT,

@@ -1,12 +1,10 @@
 "use client";
-import { ITour } from "@/interface/Tour";
-import { FC } from "react";
 import Form from "./form";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { generate } from "./pdf-document";
-import { useDomainStore } from "@/hooks/useDomain";
-import DatesData from "./dates-data";
+import { useDomainStore } from "@/hooks/use-domain";
+import { DatesData } from "./dates-data";
 import {
   BedDouble,
   BedSingle,
@@ -18,20 +16,20 @@ import {
   QrCode,
 } from "lucide-react";
 import Share from "./share";
-import BlurImage from "@/components/custom/Shared/blur-image";
-import { Tour } from "@/types/custom";
+import { QueryTourSchema } from "@/schema";
+import BlurImage from "@/components/blur-image";
 
-const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
+export function TourInfo({ tour }: { tour: QueryTourSchema }) {
   const office = useDomainStore((x) => x.office);
   return (
     <div className="col-span-12">
       <div className="bg-white rounded-2xl p-3 sm:p-4 lg:py-8 lg:px-5">
         <div className="flex flex-col md:flex-row justify-between mb-2 py-4 gap-4">
           <h1 className="font-primary text-3xl pr-2">{tour.name}</h1>
-          <Form tour={tour} />
+          <Form />
           <Button
             className="w-full md:w-fit"
-            onClick={async () => await generate(tour, office!)}
+            onClick={async () => await generate(tour, office?.details!)}
           >
             تحميل البرنامج
           </Button>
@@ -59,9 +57,9 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
                     الشخض في الغرفة المزدوجة
                   </h4>
                   <h2 className="text-xl font-bold">
-                    {office?.currency == "OMR"
-                      ? tour.price_double
-                      : tour.price_double_sa}
+                    {office?.details?.currency == "OMR"
+                      ? tour.priceDouble
+                      : tour.priceDoubleSa}
                   </h2>
                 </div>
               </div>
@@ -74,9 +72,9 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
                     الشخض في الغرفة المفردة
                   </h4>
                   <h2 className="text-xl font-bold">
-                    {office?.currency == "OMR"
-                      ? tour.price_single
-                      : tour.price_single_sa}
+                    {office?.details?.currency == "OMR"
+                      ? tour.priceSingle
+                      : tour.priceSingleSa}
                   </h2>
                 </div>
               </div>
@@ -90,7 +88,7 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
                   <div className="grid items-center ">
                     <span>الدول</span>
                     <span className="text-primary font-primary">
-                      {tour?.tour_countries?.join(" - ")}
+                      {tour?.tourCountries?.join(" - ")}
                     </span>
                   </div>
                 </div>
@@ -105,7 +103,7 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
                     <span>المدة</span>
                     <span>
                       <span className="text-primary">
-                        {tour.number_of_days} أيام
+                        {tour.numberOfDays} أيام
                       </span>
                     </span>
                   </div>
@@ -124,7 +122,7 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
                      items-center gap-4"
                       >
                         <span className="text-primary">
-                          أيام {tour.start_day} أسبوعياً
+                          أيام {tour.startDay} أسبوعياً
                         </span>
                       </div>
                     </div>
@@ -149,10 +147,10 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
           </div>
         </div>
 
-        {tour.additional_Info && (
+        {tour.additionalInfo && (
           <div className="p-3 sm:p-4 lg:p-6 bg-[var(--bg-1)] rounded-2xl border border-neutral-40 mb-6 lg:mb-10">
             <h4 className="mb-5 text-2xl font-semibold"> عن البرنامج </h4>
-            <p className="mb-5 clr-neutral-500">{tour.additional_Info}</p>
+            <p className="mb-5 clr-neutral-500">{tour.additionalInfo}</p>
           </div>
         )}
 
@@ -161,7 +159,7 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
             يوميات البرنامج
           </h4>
           <ul className="flex flex-col gap-6">
-            {tour?.tour_sections?.map(({ description, title, uuid }, index) => (
+            {tour?.tourSections?.map(({ description, title, uuid }, index) => (
               <li
                 key={uuid}
                 className="relative md:before:absolute before:top-[120px] before:bottom-[-14px] before:right-[52px] before:w-[1px] md:before:border-l before:border-dashed before:border-[var(--primary)]"
@@ -203,7 +201,7 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
             البرنامج يشمل التالي
           </h6>
           <ul className="flex flex-col gap-4 mb-10">
-            {tour?.tour_includes?.map((i) => (
+            {tour?.tourIncludes?.map((i) => (
               <li key={i.uuid}>
                 <div className="flex items-start gap-4">
                   <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-green-700">
@@ -233,7 +231,7 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
             البرنامج لا يشمل التالي
           </h6>
           <ul className="flex flex-col gap-4 mb-10">
-            {tour?.tour_excludes?.map(({ uuid, description, title }) => (
+            {tour?.tourExcludes?.map(({ uuid, description, title }) => (
               <li key={uuid}>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-red-700">
@@ -253,7 +251,7 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
           </h4>
           <div className="border border-dashed my-5"></div>
           <ul className="flex flex-col gap-4 mb-10">
-            {tour?.tour_hotels?.map((i) => (
+            {tour?.tourHotels?.map((i) => (
               <li key={i}>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-primary">
@@ -268,6 +266,6 @@ const TourInfo: FC<{ tour: Tour }> = ({ tour }) => {
       </div>
     </div>
   );
-};
+}
 
 export default TourInfo;

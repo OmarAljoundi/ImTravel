@@ -1,26 +1,31 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { LayoutProviders } from "@/components/Providers/LayoutProviders";
-import DomainLayout from "@/components/Providers/DomainProvider";
-import { getContentData, getSiteData } from "@/lib/operations";
+import { LayoutProvider } from "@/providers/layout-provider";
+import DomainLayout from "@/providers/domain-provider";
+import { getSiteData } from "@/server/public-query.server";
+import { Header } from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 
 export default async function SiteLayout({
   params,
   children,
 }: {
-  params: { domain: string };
+  params: Promise<{ domain: string }>;
   children: ReactNode;
 }) {
-  const { domain } = params;
+  const { domain } = await params;
   const data = await getSiteData(domain);
-  const siteContent = await getContentData();
   if (!data) {
     notFound();
   }
 
   return (
-    <LayoutProviders office={data} content={siteContent}>
-      <DomainLayout>{children}</DomainLayout>
-    </LayoutProviders>
+    <LayoutProvider office={data.result}>
+      <DomainLayout>
+        <Header />
+        {children}
+        <Footer />
+      </DomainLayout>
+    </LayoutProvider>
   );
 }

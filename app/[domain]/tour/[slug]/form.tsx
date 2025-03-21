@@ -9,26 +9,27 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { useDomainStore } from "@/hooks/useDomain";
+import { useDomainStore } from "@/hooks/use-domain";
 import { cn } from "@/lib/utils";
-import { Tour } from "@/types/custom";
-import { FC } from "react";
+import { QueryTourSchema } from "@/schema";
 
-const Form: FC<{ tour: Tour }> = ({ tour }) => {
+export function Form() {
   const office = useDomainStore((x) => x.office);
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button className="w-full md:w-fit">طريقة الحجز</Button>
       </DialogTrigger>
-      <DialogContent className={cn("sm:max-w-[425px]", office?.primary_font)}>
+      <DialogContent
+        className={cn("sm:max-w-[425px]", office?.details?.primaryFont)}
+      >
         <DialogHeader>
           <DialogTitle>معلومات التواصل</DialogTitle>
           <DialogDescription>
             أترك معلوماتك لكي يتم التواصل معك من قبل مختصين الرحلات
           </DialogDescription>
         </DialogHeader>
-        <div className={cn("pb-0 mb-6 relative", office?.primary_font)}>
+        <div className={cn("pb-0 mb-6 relative", office?.details?.primaryFont)}>
           <div className="bg-white rounded-2xl p-3 sm:p-4 lg:py-8 lg:px-6">
             <form className="flex flex-col gap-5 mb-4">
               <input
@@ -56,16 +57,16 @@ const Form: FC<{ tour: Tour }> = ({ tour }) => {
               أو التواصل مباشرة مع هذا الرقم
             </span>
             <a
-              href={`tel:${office?.contact_number}`}
+              href={`tel:${office?.details?.contactNumber}`}
               className="text-primary underline mr-4"
             >
-              {office?.contact_number}
+              {office?.details?.contactNumber}
             </a>
           </div>
         </div>
       </DialogContent>
     </Dialog>
   );
-};
+}
 
 export default Form;

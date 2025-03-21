@@ -1,4 +1,4 @@
-import { Tour } from "@/types/custom";
+import { QueryTourSchema } from "@/schema";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -31,7 +31,6 @@ export const europeanCountries = [
   { label: "المجر", countryCode: "HU" },
   { label: "اليونان", countryCode: "GR" },
   { label: "بولندا", countryCode: "PL" },
-  { label: "البرتغال", countryCode: "PT" },
   { label: "الدنمارك", countryCode: "DK" },
   { label: "السويد", countryCode: "SE" },
   { label: "فنلندا", countryCode: "FI" },
@@ -73,15 +72,15 @@ type TourSearch = {
   days?: string[];
   maxprice?: number | null;
 };
-export function filterTours(prop: TourSearch, tours: Tour[]) {
+export function filterTours(prop: TourSearch, tours: QueryTourSchema[]) {
   const { country, days, maxprice, currency } = prop;
 
   let filteredTours = [...tours];
-  if (country) {
+  if (country && country.length > 0) {
     const countriesToCheck = country;
     filteredTours = filteredTours.filter((tour) => {
       return countriesToCheck.some((country) =>
-        tour.tour_countries?.includes(country.trim())
+        tour.tourCountries?.includes(country.trim())
       );
     });
   }
@@ -93,26 +92,20 @@ export function filterTours(prop: TourSearch, tours: Tour[]) {
       totalDays = totalDays.concat(item.period);
     });
     filteredTours = filteredTours.filter((tour) =>
-      totalDays.includes(tour.number_of_days)
+      totalDays.includes(tour.numberOfDays)
     );
   }
 
   if (maxprice) {
     if (currency == "OMR") {
       filteredTours = filteredTours.filter(
-        (tour) => tour.price_double! < maxprice
+        (tour) => tour.priceDouble! <= maxprice
       );
     } else {
       filteredTours = filteredTours.filter(
-        (tour) => tour.price_double_sa! < maxprice
+        (tour) => tour.priceDoubleSa! <= maxprice
       );
     }
-  }
-
-  if (currency == "OMR") {
-    filteredTours.sort((a, b) => a.price_double! - b.price_double!);
-  } else {
-    filteredTours.sort((a, b) => a.price_double_sa! - b.price_double_sa!);
   }
 
   return filteredTours;
