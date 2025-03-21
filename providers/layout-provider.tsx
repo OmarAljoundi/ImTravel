@@ -35,14 +35,16 @@ export function LayoutProvider({
     let link = document.querySelector("link[rel~='icon']");
     if (!link) {
       link = document.createElement("link");
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       link.rel = "icon";
       document.getElementsByTagName("head")[0].appendChild(link);
     }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
-    link.href = office.logo;
+    link.href = office.details.logo;
     setMount(true);
-  }, []);
+  }, [office]);
 
   if (!mount) return null;
   return <>{children}</>;
