@@ -18,7 +18,8 @@ export default function RootLayout({
       <body
         className={cn(
           Naskh.variable,
-
+          Kufi.variable,
+          Sans.variable,
           "bg-[var(--bg-1)] text-[var(--neutral-700)]"
         )}
       >

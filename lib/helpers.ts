@@ -47,35 +47,6 @@ export const getPrice = (price: number): string => {
   return `${priceWord} ${price} ${currecny}`;
 };
 
-type FilterOperator =
-  | "eq"
-  | "neq"
-  | "gt"
-  | "gte"
-  | "lt"
-  | "lte"
-  | "like"
-  | "ilike"
-  | "is"
-  | "not.is"
-  | "in"
-  | "cs"
-  | "cd"
-  | "sl"
-  | "sr"
-  | "nxl"
-  | "nxr"
-  | "adj"
-  | "ov"
-  | "fts"
-  | "plfts"
-  | "phfts"
-  | "wfts";
-
-export function getEqOperator(op: any): FilterOperator {
-  return "eq";
-}
-
 export function createClientLink(domain: string, endpoint: string) {
   return `${process.env.NEXT_PUBLIC_HTTP_ROOT_DOMAIN_CLIENT?.replace(
     "REPLACE_ME",

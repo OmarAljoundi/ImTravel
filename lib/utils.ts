@@ -87,7 +87,7 @@ export function filterTours(prop: TourSearch, tours: QueryTourSchema[]) {
 
   if (days && days.length > 0) {
     const period = daysFilter.filter((x) => days.join(",").includes(x.label));
-    var totalDays: any[] = [];
+    let totalDays: any[] = [];
     period.forEach((item) => {
       totalDays = totalDays.concat(item.period);
     });

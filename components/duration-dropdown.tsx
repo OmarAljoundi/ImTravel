@@ -82,7 +82,8 @@ const DurationDropdown = () => {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className={cn("w-[200px] p-0", office?.primary_font)}
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        className={cn("w-[200px] p-0", office?.details?.primaryFont!)}
         align="start"
       >
         <Command>

@@ -16,6 +16,7 @@ export function Header() {
       <div className="container mx-auto flex justify-between px-4 xl:justify-start gap-x-10 items-center py-3 lg:py-5 gap-1">
         <Link href="/" className="flex items-center min-w-[100px]">
           <Image
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             src={office?.details.logo!}
             className="self-center"
             width={100}

@@ -13,6 +13,7 @@ export async function GET() {
       }
     );
   } catch (ex) {
+    console.error("Couldn't be revalidated", ex);
     return NextResponse.json(
       {
         success: false,

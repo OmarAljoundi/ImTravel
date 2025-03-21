@@ -20,7 +20,7 @@ export const generate = async (
   office: QueryOfficeSchema
 ) => {
   const createStories = (): Paragraph[] => {
-    var p: Paragraph[] = [];
+    const p: Paragraph[] = [];
     p.push(createSubHeading("يوميات البرنامج"));
     tour.tourSections?.map((i) => {
       p.push(
@@ -98,7 +98,7 @@ export const generate = async (
     });
   };
   const createBullet = (text: string, text2?: string): Paragraph => {
-    var x = new Paragraph({
+    const x = new Paragraph({
       alignment: AlignmentType.RIGHT,
 
       children: [
@@ -132,7 +132,7 @@ export const generate = async (
   };
 
   const createTourIncludes = (): Paragraph[] => {
-    var p: Paragraph[] = [];
+    const p: Paragraph[] = [];
     p.push(createSubHeading("ما يشمله البرنامج"));
     tour.tourIncludes?.map((i) => {
       p.push(createBullet(i.title, i.description.replaceAll(",", " ، ")));
@@ -140,7 +140,7 @@ export const generate = async (
     return p;
   };
   const createTourExcludes = (): Paragraph[] => {
-    var p: Paragraph[] = [];
+    const p: Paragraph[] = [];
     p.push(createSubHeading("ما لا يشمله البرنامج"));
     tour.tourExcludes?.map((i) => {
       p.push(createBullet(i.title, i.description.replaceAll(",", " ، ")));
@@ -284,7 +284,7 @@ export const generate = async (
   };
 
   const createHotelInfo = (): Paragraph[] => {
-    var p: Paragraph[] = [];
+    const p: Paragraph[] = [];
     p.push(createSubHeading("الفنادق"));
     tour.tourHotels?.map((i) => {
       p.push(

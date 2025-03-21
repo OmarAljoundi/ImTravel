@@ -11,7 +11,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useDomainStore } from "@/hooks/use-domain";
 import { cn } from "@/lib/utils";
-import { QueryTourSchema } from "@/schema";
 
 export function Form() {
   const office = useDomainStore((x) => x.office);

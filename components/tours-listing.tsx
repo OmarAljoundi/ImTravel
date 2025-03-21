@@ -27,7 +27,7 @@ const TourListing = () => {
           <div className="">
             <div className="mt-2">
               <div className="grid grid-cols-12 gap-6">
-                {office?.bestTours?.map((tour, idx) => (
+                {office?.bestTours?.map((tour) => (
                   <TourCard key={tour.id} {...tour} />
                 ))}
               </div>

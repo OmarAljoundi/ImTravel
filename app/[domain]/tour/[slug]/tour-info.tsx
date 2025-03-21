@@ -29,6 +29,7 @@ export function TourInfo({ tour }: { tour: QueryTourSchema }) {
           <Form />
           <Button
             className="w-full md:w-fit"
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             onClick={async () => await generate(tour, office?.details!)}
           >
             تحميل البرنامج
@@ -231,7 +232,7 @@ export function TourInfo({ tour }: { tour: QueryTourSchema }) {
             البرنامج لا يشمل التالي
           </h6>
           <ul className="flex flex-col gap-4 mb-10">
-            {tour?.tourExcludes?.map(({ uuid, description, title }) => (
+            {tour?.tourExcludes?.map(({ uuid, description }) => (
               <li key={uuid}>
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 grid place-content-center rounded-full shrink-0 bg-red-700">
