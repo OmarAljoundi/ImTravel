@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import TourInfo from "./tour-info";
 import Breadcrumb from "@/components/layout/breadcrumb";
-import { getTourDetails } from "@/server/public-query.server";
+import { getSiteData, getTourDetails } from "@/server/public-query.server";
 
 type Params = {
   params: Promise<{
@@ -11,9 +11,15 @@ type Params = {
 };
 
 const Page = async ({ params }: Params) => {
-  const { slug } = await params;
-  const response = await getTourDetails(decodeURIComponent(slug));
-  if (!response) notFound();
+  const { slug, domain } = await params;
+  const siteData = await getSiteData(domain);
+
+  const response = await getTourDetails(
+    decodeURIComponent(slug),
+    siteData?.result?.details?.currency ?? "SAR"
+  );
+
+  if (!response?.result) notFound();
 
   return (
     <main>

@@ -46,9 +46,9 @@ export async function getDestinations() {
   return undefined;
 }
 
-export async function getDestination(slug: string) {
+export async function getDestination(slug: string, currency: string) {
   const result = await fetch(
-    `${process.env.BACKEND_API}/destinations/${slug}`,
+    `${process.env.BACKEND_API}/destinations/${slug}?currency=${currency}`,
     { next: { revalidate: 86400 } }
   );
 
@@ -60,10 +60,13 @@ export async function getDestination(slug: string) {
   return undefined;
 }
 
-export async function getTours() {
-  const result = await fetch(`${process.env.BACKEND_API}/tours`, {
-    next: { revalidate: 86400 },
-  });
+export async function getTours(currency: string) {
+  const result = await fetch(
+    `${process.env.BACKEND_API}/tours?currency=${currency}`,
+    {
+      next: { revalidate: 86400 },
+    }
+  );
 
   if (result.status == 200) {
     return (await result.json()) as {
@@ -73,10 +76,13 @@ export async function getTours() {
   return undefined;
 }
 
-export async function getTourDetails(slug: string) {
-  const result = await fetch(`${process.env.BACKEND_API}/tours/${slug}`, {
-    next: { revalidate: 86400 },
-  });
+export async function getTourDetails(slug: string, currency: string) {
+  const result = await fetch(
+    `${process.env.BACKEND_API}/tours/${slug}?currency=${currency}`,
+    {
+      next: { revalidate: 86400 },
+    }
+  );
 
   if (result.status == 200) {
     return (await result.json()) as {
