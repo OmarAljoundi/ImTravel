@@ -260,13 +260,13 @@ export const generate = async (
   const createLogo = async (): Promise<Paragraph> => {
     try {
       const result = (await convertToBase64()) as string;
-      const extension = getImageExtension(office.logo ?? "");
+
       return new Paragraph({
         alignment: AlignmentType.CENTER,
         children: [
           new ImageRun({
             data: Uint8Array.from(
-              atob(result.replace(`data:image/${extension};base64,`, "")),
+              atob(result.replace(/^data:image\/[a-zA-Z0-9.+-]+;base64,/, "")),
               (c) => c.charCodeAt(0)
             ),
             transformation: {
@@ -346,13 +346,3 @@ export const generate = async (
     console.log("Document created successfully");
   });
 };
-
-function getImageExtension(url: string): string | null {
-  // Split the URL by the period (.) to isolate the last part of the URL
-  const parts = url.split(".");
-
-  // The image extension is the last part of the URL
-  const extension = parts[parts.length - 1];
-
-  return extension.toLowerCase(); // Convert to lowercase for consistency
-}
